@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">book2play</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_bookings">My Bookings</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_logout">Logout</string>
+    <string name="nav_close">close navigation drawer</string>
+    <string name="nav_open">open navigation drawer</string>
+
+    <string name="search">Search for indoors by names or city</string>
+    <string name="sample_stadium_name_1"><![CDATA[CR7 Futsal & Indoor Cricket Court]]></string>
+    <string name="sample_stadium_location_1">Kollupitiya</string>
+    <string name="stadium_open">Open</string>
+    <string name="closing_time">Closes at 12AM</string>
+    <string name="sample_stadium_price_1">Rs. 3500</string>
+
+    <string name="sample_stadium_name_2">Goal at IDH</string>
+    <string name="sample_stadium_location_2">Gothatuwa</string>
+    <string name="stadium_close">Closed</string>
+    <string name="opening_time">Opens at 9AM</string>
+    <string name="sample_stadium_price_2">Rs. 4000</string>
 </resources>

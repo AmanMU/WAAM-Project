@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item android:id="@+id/all"
+        android:title="ALL">
+        <menu>
+    <item
+    android:title="@string/nav_home"
+    android:icon="@drawable/outline_home_24"
+    android:checked="true"/>
+    <item
+    android:title="@string/nav_bookings"
+    android:icon="@drawable/outline_sports_soccer_24"/>
+    <item
+    android:title="@string/nav_account"
+    android:icon="@drawable/outline_person_24"/>
+    <item
+    android:title="@string/nav_logout"
+    android:icon="@drawable/outline_logout_24"/>
+        </menu>
+    </item>
+</menu>
