@@ -8,6 +8,10 @@
     <string name="nav_close">close navigation drawer</string>
     <string name="nav_open">open navigation drawer</string>
 
+    <string name="cat_futsal">Futsal</string>
+    <string name="cat_cricket">Cricket</string>
+    <string name="cat_badminton">Badminton</string>
+
     <string name="search">Search for indoors by names or city</string>
     <string name="sample_stadium_name_1"><![CDATA[CR7 Futsal & Indoor Cricket Court]]></string>
     <string name="sample_stadium_location_1">Kollupitiya</string>
