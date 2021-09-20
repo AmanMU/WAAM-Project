@@ -24,4 +24,14 @@
     <string name="stadium_close">Closed</string>
     <string name="opening_time">Opens at 9AM</string>
     <string name="sample_stadium_price_2">Rs. 4000</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="stadium_owner">Stadium Owner</string>
+    <string name="player">PLayer</string>
+    <string name="loginBtnInSignup">Already a user? Login</string>
+    <string name="btn_sign_in">Sign In</string>
+    <string name="welcome_back">WELCOME BACK!</string>
+    <string name="signupBtnInSignIn">Are you new here? Register</string>
 </resources>
