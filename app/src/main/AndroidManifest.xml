@@ -12,17 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Book2play">
         <activity
+            android:name=".LoadingActivity"
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity
             android:name=".SignIn"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".SelectUserType"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".SignUp"
             android:exported="true"

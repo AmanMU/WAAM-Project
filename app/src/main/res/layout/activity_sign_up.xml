@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/email"
             android:imeOptions="actionNext"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:maxLines="1"
             android:nextFocusDown="@id/passwordTextField" />
 
@@ -109,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1" />
 
 
@@ -141,6 +141,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/signupNameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/book2playLogo"
+        app:layout_constraintVertical_bias="0.408" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

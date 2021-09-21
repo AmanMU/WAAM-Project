@@ -52,12 +52,12 @@
         app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailTextField"
+            android:id="@+id/signinEmailTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
             android:imeOptions="actionNext"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:maxLines="1"
             android:nextFocusDown="@id/passwordTextField" />
 
@@ -79,11 +79,11 @@
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordTextField"
+            android:id="@+id/signinPasswordTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1" />
 
 
@@ -94,7 +94,7 @@
         android:layout_width="348dp"
         android:layout_height="52dp"
         android:layout_marginBottom="96dp"
-        android:onClick="loginBtnClicked"
+        android:onClick="onLoginBtnClicked"
         android:text="@string/btn_sign_in"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
@@ -127,6 +127,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="54dp"
+        android:layout_height="76dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/book2playLogo"
+        app:layout_constraintVertical_bias="0.408" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

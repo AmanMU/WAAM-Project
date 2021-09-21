@@ -8,7 +8,7 @@ import android.view.View;
 
 public class SelectUserType extends AppCompatActivity {
 
-    private static final String TYPE_CUSTOMER = "Customer";
+    private static final String TYPE_PLAYER = "Player";
     private static final String TYPE_STADIUM_OWNER = "StadiumOwner";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class SelectUserType extends AppCompatActivity {
     public void onUserTypeSelected(View view){
         Intent intent = new Intent(SelectUserType.this, SignUp.class);
         if(view.getId() == R.id.playerBtn)
-            intent.putExtra("userType", TYPE_CUSTOMER);
+            intent.putExtra("userType", TYPE_PLAYER);
         else
             intent.putExtra("userType", TYPE_STADIUM_OWNER);
 
