@@ -8,6 +8,9 @@
     <string name="nav_close">close navigation drawer</string>
     <string name="nav_open">open navigation drawer</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
     <string name="cat_futsal">Futsal</string>
     <string name="cat_cricket">Cricket</string>
     <string name="cat_badminton">Badminton</string>

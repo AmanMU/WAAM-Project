@@ -1,5 +1,6 @@
 package com.waam.book2play;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -70,18 +72,25 @@ public class SignIn extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            startActivity(new Intent(SignIn.this, MainActivity.class));
-                        }
-                        else {
-                            Toast.makeText(SignIn.this,"Login failed! Please check email and password", Toast.LENGTH_LONG);
-                        }
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        startActivity(new Intent(SignIn.this, MainActivity.class));
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(SignIn.this,"Login failed! Please check email and password", Toast.LENGTH_LONG).show();
                     }
                 });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> SignIn.super.onBackPressed()).create().show();
     }
 
     public void onRegisterBtnClicked(View view) {
