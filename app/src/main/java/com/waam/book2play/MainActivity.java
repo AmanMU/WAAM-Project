@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.user_nav);
+        View headerView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         actionBarDrawerToggle.syncState();
 
-        final TextView userNameTextView = findViewById(R.id.userNameTextView);
+        final TextView userNameTextView = headerView.findViewById(R.id.userNameTextView);
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
         ref = FirebaseDatabase.getInstance().getReference("Users");
