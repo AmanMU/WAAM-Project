@@ -3,19 +3,26 @@ package com.waam.book2play;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddStadiums extends AppCompatActivity {
 
@@ -27,6 +34,7 @@ public class AddStadiums extends AppCompatActivity {
     private ImageView sImageView;
     private ProgressBar sUploadProgress;
     private Uri imageURI;
+    int t2hour, t2minute, t1hour, t1minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,20 @@ public class AddStadiums extends AppCompatActivity {
                 openImageChooser();
             }
         });
+
+        sOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setOT();
+            }
+        });
+
+        sCT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCT();
+            }
+        });
     }
 
     private boolean validatePhone(){
@@ -64,7 +86,7 @@ public class AddStadiums extends AppCompatActivity {
             sPhoneLayout.setError("Field Cannot be empty.");
             return false;
         }else if (!(phone.length()==10)){
-            sPhoneLayout.setError("Phone number format is wrong.");
+            sPhoneLayout.setError("Phone number should be 10 digits.");
             return false;
         }else{
             sPhoneLayout.setError(null);
@@ -162,5 +184,69 @@ public class AddStadiums extends AppCompatActivity {
             imageURI = data.getData();
             sImageView.setImageURI(imageURI);
         }
+    }
+
+    private void setCT(){
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                AddStadiums.this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        t2hour = i;
+                        t2minute = i1;
+
+                        String time = t2hour + ":" + t2minute;
+
+                        SimpleDateFormat f24hours = new SimpleDateFormat(
+                                "HH:mm"
+                        );
+                        try {
+                            Date date = f24hours.parse(time);
+                            SimpleDateFormat f12hours = new SimpleDateFormat(
+                                    "hh:mm aa"
+                            );
+                            sCT.setText(f12hours.format(date));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, 12, 0, false
+        );
+        timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        timePickerDialog.updateTime(t2hour, t2minute);
+        timePickerDialog.show();
+    }
+
+    private void setOT(){
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                AddStadiums.this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        t1hour = i;
+                        t1minute = i1;
+
+                        String time = t1hour + ":" + t1minute;
+
+                        SimpleDateFormat f24hours = new SimpleDateFormat(
+                                "HH:mm"
+                        );
+                        try {
+                            Date date = f24hours.parse(time);
+                            SimpleDateFormat f12hours = new SimpleDateFormat(
+                                    "hh:mm aa"
+                            );
+                            sOT.setText(f12hours.format(date));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, 12, 0, false
+        );
+        timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        timePickerDialog.updateTime(t1hour, t1minute);
+        timePickerDialog.show();
     }
 }
