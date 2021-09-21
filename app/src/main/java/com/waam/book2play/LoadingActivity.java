@@ -23,20 +23,17 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = mAuth.getCurrentUser();
-                Intent intent;
-                if (user != null)
-                    intent = new Intent(LoadingActivity.this, MainActivity.class);
+        mAuthListener = firebaseAuth -> {
+            FirebaseUser user = mAuth.getCurrentUser();
+            Intent intent;
+            if (user != null)
+                intent = new Intent(LoadingActivity.this, MainActivity.class);
+            else
+                intent = new Intent(LoadingActivity.this, SignIn.class);
 
-                else
-                    intent = new Intent(LoadingActivity.this, SignIn.class);
-
-                startActivity(intent);
-                finish();
-            }
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         };
     }
 

@@ -91,20 +91,17 @@ public class SignUp extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            User user = new User(name, email, type);
-                            FirebaseDatabase.getInstance("https://book2play-waam-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        User user = new User(name, email, type);
+                        FirebaseDatabase.getInstance("https://book2play-waam-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .setValue(user).addOnCompleteListener(task1 -> {
+                                    if(task1.isSuccessful()) {
                                         progressBar.setVisibility(View.GONE);
                                         Toast.makeText(SignUp.this, "Registration Successful!",Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(SignUp.this,MainActivity.class));
+                                        finish();
                                         Log.d("Success", "Success");
                                     }
                                     else {
@@ -112,12 +109,10 @@ public class SignUp extends AppCompatActivity {
                                         Toast.makeText(SignUp.this, "Error! Registration failed",Toast.LENGTH_LONG).show();
                                         Log.d("Database", "Database Fail");
                                     }
-                                }
-                            });
-                        } else {
-                            Toast.makeText(SignUp.this, "Oops! Failed to Register!",Toast.LENGTH_LONG).show();
-                            Log.d("Auth", "Auth Fail");
-                        }
+                                });
+                    } else {
+                        Toast.makeText(SignUp.this, "Oops! Failed to Register!",Toast.LENGTH_LONG).show();
+                        Log.d("Auth", "Auth Fail");
                     }
                 });
 
