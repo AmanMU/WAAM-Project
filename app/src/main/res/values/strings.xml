@@ -16,17 +16,12 @@
     <string name="cat_badminton">Badminton</string>
 
     <string name="search">Search for indoors by names or city</string>
-    <string name="sample_stadium_name_1"><![CDATA[CR7 Futsal & Indoor Cricket Court]]></string>
-    <string name="sample_stadium_location_1">Kollupitiya</string>
+    <string name="stadium_name">CR7 Futsal &amp; Indoor Cricket Court</string>
+    <string name="stadium_location">Kollupitiya</string>
     <string name="stadium_open">Open</string>
     <string name="closing_time">Closes at 12AM</string>
-    <string name="sample_stadium_price_1">Rs. 3500</string>
+    <string name="stadium_price">Rs. 3500</string>
 
-    <string name="sample_stadium_name_2">Goal at IDH</string>
-    <string name="sample_stadium_location_2">Gothatuwa</string>
-    <string name="stadium_close">Closed</string>
-    <string name="opening_time">Opens at 9AM</string>
-    <string name="sample_stadium_price_2">Rs. 4000</string>
     <string name="btn_sign_up">Sign Up</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
@@ -38,4 +33,5 @@
     <string name="welcome_back">WELCOME BACK!</string>
     <string name="signupBtnInSignIn">Are you new here? Register</string>
     <string name="user">User</string>
+    <string name="stadiumImage">Stadium Image</string>
 </resources>
