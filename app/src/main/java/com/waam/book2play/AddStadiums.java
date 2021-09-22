@@ -29,6 +29,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -56,6 +58,7 @@ public class AddStadiums extends Fragment {
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
     private StorageTask registerTask;
+    private FirebaseUser user;
 
     public View onCreateView(@NonNull @org.jetbrains.annotations.NotNull LayoutInflater inflater,
                              @Nullable @org.jetbrains.annotations.Nullable ViewGroup container,
@@ -82,6 +85,7 @@ public class AddStadiums extends Fragment {
         sUploadProgress = v.findViewById(R.id.progressBar);
         storageRef = FirebaseStorage.getInstance().getReference("stadiums");
         databaseRef = FirebaseDatabase.getInstance().getReference("stadiums");
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         sChooseImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +195,7 @@ public class AddStadiums extends Fragment {
         if(!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice()) {
             return;
         }else if (imageURI != null){
-            String email = "asel@gmail.com";
+            String email = user.getEmail();
             String phone = sPhone.getText().toString().trim();
             String sname = sName.getText().toString().trim();
             String location = sAddress.getText().toString().trim();
