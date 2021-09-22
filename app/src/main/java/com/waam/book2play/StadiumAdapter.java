@@ -28,6 +28,7 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
     @NonNull
     @Override
     public StadiumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(mContext).inflate(R.layout.stadium_card_layout, parent, false);
         return new StadiumViewHolder(view);
     }
@@ -37,7 +38,8 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
         StadiumRegister currentStadium = mStadiums.get(position);
         holder.stadiumName.setText(currentStadium.getsName());
         holder.stadiumLocation.setText(currentStadium.getsLocation());
-        holder.stadiumClosingTime.setText("Open from " + currentStadium.getsOT() + " to " + currentStadium.getsCT());
+        String time = "Open from " + currentStadium.getsOT() + " to " + currentStadium.getsCT();
+        holder.stadiumClosingTime.setText(time);
         holder.stadiumPrice.setText(currentStadium.getsPrice());
 
         Picasso.get().load(currentStadium.getsImageURL())
@@ -45,6 +47,11 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
                 .centerCrop()
                 .into(holder.stadiumImage);
 
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     @Override
