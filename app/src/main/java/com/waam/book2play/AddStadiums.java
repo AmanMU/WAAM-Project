@@ -1,23 +1,36 @@
 package com.waam.book2play;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
 import java.net.URI;
 import java.text.ParseException;
@@ -35,6 +48,9 @@ public class AddStadiums extends AppCompatActivity {
     private ProgressBar sUploadProgress;
     private Uri imageURI;
     int t2hour, t2minute, t1hour, t1minute;
+    private StorageReference storageRef;
+    private DatabaseReference databaseRef;
+    private StorageTask registerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +73,8 @@ public class AddStadiums extends AppCompatActivity {
         sRegisterButton = findViewById(R.id.btn_stadiumRegister);
         sImageView = findViewById(R.id.iv_sUploadImage);
         sUploadProgress = findViewById(R.id.progressBar);
+        storageRef = FirebaseStorage.getInstance().getReference("stadiums");
+        databaseRef = FirebaseDatabase.getInstance().getReference("stadiums");
 
         sChooseImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +94,17 @@ public class AddStadiums extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setCT();
+            }
+        });
+
+        sRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (registerTask != null && registerTask.isInProgress()){
+                    Toast.makeText(AddStadiums.this, "Action in progress, please wait.", Toast.LENGTH_SHORT).show();
+                }else {
+                    registerStadium();
+                }
             }
         });
     }
@@ -100,7 +129,7 @@ public class AddStadiums extends AppCompatActivity {
             sNameLayout.setError("Field Cannot be empty.");
             return false;
         }else{
-            sName.setError(null);
+            sNameLayout.setError(null);
             return true;
         }
     }
@@ -149,24 +178,60 @@ public class AddStadiums extends AppCompatActivity {
         }
     }
 
-
-    public void confirmInput(View view){
+    public void registerStadium(){
         if(!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice()) {
             return;
-        }
-        String input = sPhone.getText().toString().trim();
-        input += "\n";
-        input += sName.getText().toString().trim();
-        input += "\n";
-        input += sAddress.getText().toString().trim();
-        input += "\n";
-        input += sOT.getText().toString().trim();
-        input += "\n";
-        input += sCT.getText().toString().trim();
-        input += "\n";
-        input += sPrice.getText().toString().trim();
+        }else if (imageURI != null){
+            String email = "asel@gmail.com";
+            String phone = sPhone.getText().toString().trim();
+            String sname = sName.getText().toString().trim();
+            String location = sAddress.getText().toString().trim();
+            String ot = sOT.getText().toString().trim();
+            String ct = sCT.getText().toString().trim();
+            String price = sPrice.getText().toString().trim();
+            StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageURI));
 
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+            registerTask = fileReference.putFile(imageURI)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    sUploadProgress.setProgress(0);
+                                }
+                            }, 1000);
+                            Toast.makeText(AddStadiums.this, "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
+                            StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price,
+                                    taskSnapshot.getStorage().getDownloadUrl().toString());
+                            String uploadID = databaseRef.push().getKey();
+                            databaseRef.child(uploadID).setValue(stadiumRegister);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddStadiums.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                            sUploadProgress.setProgress((int) progress);
+                        }
+                    });
+
+        }else {
+            Toast.makeText(this, "Please add an image of your stadium.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getFileExtension(Uri uri){
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
     private void openImageChooser(){
