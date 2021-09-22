@@ -268,7 +268,7 @@ public class AddStadiums extends Fragment {
     private void setCT(){
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                android.R.style.Theme_Material_Light_Dialog,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
@@ -300,7 +300,7 @@ public class AddStadiums extends Fragment {
     private void setOT(){
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                android.R.style.Theme_Material_Light_Dialog,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {

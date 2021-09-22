@@ -43,6 +43,10 @@ public class StadiumOwnerHome extends AppCompatActivity implements NavigationVie
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.oFragment_container, new MyStadiums()).commit();
+        }
     }
 
     @Override
