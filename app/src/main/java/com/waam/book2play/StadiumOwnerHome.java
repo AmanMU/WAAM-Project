@@ -12,11 +12,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class StadiumOwnerHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class StadiumOwnerHome extends AppCompatActivity implements NavigationVie
 
         drawerLayout = findViewById(R.id.oDrawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        mAuth = FirebaseAuth.getInstance();
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -52,11 +55,10 @@ public class StadiumOwnerHome extends AppCompatActivity implements NavigationVie
                 getSupportFragmentManager().beginTransaction().replace(R.id.oFragment_container, new MyStadiums()).commit();
                 break;
             case R.id.nav_addStadium:
-                Intent myIntent = new Intent(StadiumOwnerHome.this, AddStadiums.class);
-                StadiumOwnerHome.this.startActivity(myIntent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.oFragment_container, new AddStadiums()).commit();
                 break;
             case R.id.nav_ownerLogout:
-                //mAuth.signOut();
+                mAuth.signOut();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
