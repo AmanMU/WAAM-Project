@@ -19,10 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddStadiums"
-            android:exported="true">
-        </activity>
-        <activity
             android:name=".LoadingActivity"
             android:exported="true"
             android:noHistory="true">

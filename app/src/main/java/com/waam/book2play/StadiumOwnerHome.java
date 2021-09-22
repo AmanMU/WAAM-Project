@@ -49,9 +49,6 @@ public class StadiumOwnerHome extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_ownerHome:
-                getSupportFragmentManager().beginTransaction().replace(R.id.oFragment_container, new Home()).commit();
-                break;
-            case R.id.nav_myStadiums:
                 getSupportFragmentManager().beginTransaction().replace(R.id.oFragment_container, new MyStadiums()).commit();
                 break;
             case R.id.nav_addStadium:
