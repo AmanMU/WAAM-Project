@@ -50,6 +50,7 @@ public class Home extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot postSnapshot : snapshot.getChildren()) {
                     StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
+                    stadium.setsKey(postSnapshot.getKey());
                     stadiums.add(stadium);
                 }
 

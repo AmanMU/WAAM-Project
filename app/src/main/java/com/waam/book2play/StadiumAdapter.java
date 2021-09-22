@@ -1,6 +1,7 @@
 package com.waam.book2play;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +34,13 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
 
     @Override
     public void onBindViewHolder(@NonNull StadiumViewHolder holder, int position) {
-        StadiumRegister currentImageCard = mStadiums.get(position);
-        holder.stadiumName.setText(currentImageCard.getsName());
-        holder.stadiumLocation.setText(currentImageCard.getsLocation());
-        holder.stadiumClosingTime.setText(currentImageCard.getsCT());
-        holder.stadiumPrice.setText(currentImageCard.getsPrice());
+        StadiumRegister currentStadium = mStadiums.get(position);
+        holder.stadiumName.setText(currentStadium.getsName());
+        holder.stadiumLocation.setText(currentStadium.getsLocation());
+        holder.stadiumClosingTime.setText("Open from " + currentStadium.getsOT() + " to " + currentStadium.getsCT());
+        holder.stadiumPrice.setText(currentStadium.getsPrice());
 
-        Picasso.get().load(currentImageCard.getsImageURL())
+        Picasso.get().load(currentStadium.getsImageURL())
                 .fit()
                 .centerCrop()
                 .into(holder.stadiumImage);
@@ -51,7 +52,7 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
         return mStadiums.size();
     }
 
-    public class StadiumViewHolder extends RecyclerView.ViewHolder {
+    public class StadiumViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView stadiumName,stadiumLocation,stadiumClosingTime,stadiumPrice;
         public ImageView stadiumImage;
 
@@ -63,6 +64,21 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
             stadiumClosingTime = itemView.findViewById(R.id.sClosingTime);
             stadiumPrice = itemView.findViewById(R.id.sPrice);
             stadiumImage = itemView.findViewById(R.id.sImage);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Context context = view.getContext();
+
+            Intent intent = new Intent(context, SingleStadium.class);
+
+            int clickPosition = getAdapterPosition();  // get position of clicked item
+
+            StadiumRegister stadium = mStadiums.get(clickPosition);
+            intent.putExtra("stadium", stadium);
+            context.startActivity(intent);
         }
     }
 }

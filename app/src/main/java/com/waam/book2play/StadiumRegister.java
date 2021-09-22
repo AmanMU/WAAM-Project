@@ -1,6 +1,10 @@
 package com.waam.book2play;
 
-public class StadiumRegister {
+import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
+
+public class StadiumRegister implements Serializable {
     private String sEmail;
     private String sPhone;
     private String sName;
@@ -9,6 +13,7 @@ public class StadiumRegister {
     private String sCT;
     private String sPrice;
     private String sImageURL;
+    private String sKey;
 
     public StadiumRegister() {
     }
@@ -86,5 +91,15 @@ public class StadiumRegister {
 
     public void setsImageURL(String sImageURL) {
         this.sImageURL = sImageURL;
+    }
+
+    @Exclude
+    public String getsKey() {
+        return sKey;
+    }
+
+    @Exclude
+    public void setsKey(String sKey) {
+        this.sKey = sKey;
     }
 }
