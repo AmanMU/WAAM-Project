@@ -3,7 +3,9 @@ package com.waam.book2play;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -13,7 +15,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,7 +42,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddStadiums extends AppCompatActivity {
+public class AddStadiums extends Fragment {
 
     private TextInputLayout sPhoneLayout, sNameLayout, sAddressLayout, sOTLayout, sCTLayout, sPriceLayout;
     private TextInputEditText sPhone, sName, sAddress, sOT, sCT, sPrice;
@@ -53,27 +57,29 @@ public class AddStadiums extends AppCompatActivity {
     private DatabaseReference databaseRef;
     private StorageTask registerTask;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_stadiums);
+    public View onCreateView(@NonNull @org.jetbrains.annotations.NotNull LayoutInflater inflater,
+                             @Nullable @org.jetbrains.annotations.Nullable ViewGroup container,
+                             @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
 
-        sPhone = findViewById(R.id.stadiumPhoneTextField);
-        sName = findViewById(R.id.stadiumNameTextField);
-        sAddress = findViewById(R.id.stadiumAddressTextField);
-        sOT = findViewById(R.id.stadiumOTTextField);
-        sCT = findViewById(R.id.stadiumCTTextField);
-        sPrice = findViewById(R.id.stadiumPriceTextField);
-        sPhoneLayout = findViewById(R.id.stadiumPhoneLayout);
-        sNameLayout = findViewById(R.id.stadiumNameLayout);
-        sAddressLayout = findViewById(R.id.stadiumAddressLayout);
-        sOTLayout = findViewById(R.id.openTimeLayout);
-        sCTLayout = findViewById(R.id.closeTimeLayout);
-        sPriceLayout = findViewById(R.id.stadiumPriceLayout);
-        sChooseImageButton = findViewById(R.id.btn_addImage);
-        sRegisterButton = findViewById(R.id.btn_stadiumRegister);
-        sImageView = findViewById(R.id.iv_sUploadImage);
-        sUploadProgress = findViewById(R.id.progressBar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Stadium");
+        View v = inflater.inflate(R.layout.activity_add_stadiums, container, false);
+
+        sPhone = v.findViewById(R.id.stadiumPhoneTextField);
+        sName = v.findViewById(R.id.stadiumNameTextField);
+        sAddress = v.findViewById(R.id.stadiumAddressTextField);
+        sOT = v.findViewById(R.id.stadiumOTTextField);
+        sCT = v.findViewById(R.id.stadiumCTTextField);
+        sPrice = v.findViewById(R.id.stadiumPriceTextField);
+        sPhoneLayout = v.findViewById(R.id.stadiumPhoneLayout);
+        sNameLayout = v.findViewById(R.id.stadiumNameLayout);
+        sAddressLayout = v.findViewById(R.id.stadiumAddressLayout);
+        sOTLayout = v.findViewById(R.id.openTimeLayout);
+        sCTLayout = v.findViewById(R.id.closeTimeLayout);
+        sPriceLayout = v.findViewById(R.id.stadiumPriceLayout);
+        sChooseImageButton = v.findViewById(R.id.btn_addImage);
+        sRegisterButton = v.findViewById(R.id.btn_stadiumRegister);
+        sImageView = v.findViewById(R.id.iv_sUploadImage);
+        sUploadProgress = v.findViewById(R.id.progressBar);
         storageRef = FirebaseStorage.getInstance().getReference("stadiums");
         databaseRef = FirebaseDatabase.getInstance().getReference("stadiums");
 
@@ -101,13 +107,15 @@ public class AddStadiums extends AppCompatActivity {
         sRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (registerTask != null && registerTask.isInProgress()){
-                    Toast.makeText(AddStadiums.this, "Action in progress, please wait.", Toast.LENGTH_SHORT).show();
-                }else {
+                if (registerTask != null && registerTask.isInProgress()) {
+                    Toast.makeText(getActivity(), "Action in progress, please wait.", Toast.LENGTH_SHORT).show();
+                } else {
                     registerStadium();
                 }
             }
         });
+
+        return v;
     }
 
     private boolean validatePhone(){
@@ -206,7 +214,7 @@ public class AddStadiums extends AppCompatActivity {
                                             sUploadProgress.setProgress(0);
                                         }
                                     }, 1000);
-                                    Toast.makeText(AddStadiums.this, "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
                                     StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price,
                                             uri.toString());
                                     String uploadID = databaseRef.push().getKey();
@@ -218,7 +226,7 @@ public class AddStadiums extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddStadiums.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -230,12 +238,12 @@ public class AddStadiums extends AppCompatActivity {
                     });
 
         }else {
-            Toast.makeText(this, "Please add an image of your stadium.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please add an image of your stadium.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private String getFileExtension(Uri uri){
-        ContentResolver cR = getContentResolver();
+        ContentResolver cR = requireActivity().getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
@@ -248,10 +256,10 @@ public class AddStadiums extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null){
             imageURI = data.getData();
             sImageView.setImageURI(imageURI);
         }
@@ -259,7 +267,7 @@ public class AddStadiums extends AppCompatActivity {
 
     private void setCT(){
         TimePickerDialog timePickerDialog = new TimePickerDialog(
-                AddStadiums.this,
+                getActivity(),
                 android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -291,7 +299,7 @@ public class AddStadiums extends AppCompatActivity {
 
     private void setOT(){
         TimePickerDialog timePickerDialog = new TimePickerDialog(
-                AddStadiums.this,
+                getActivity(),
                 android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override

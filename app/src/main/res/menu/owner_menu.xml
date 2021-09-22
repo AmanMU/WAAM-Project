@@ -10,10 +10,6 @@
             android:icon="@drawable/outline_home_24"
             android:title="@string/nav_ownerHome" />
         <item
-            android:id="@+id/nav_myStadiums"
-            android:icon="@drawable/outline_sports_soccer_24"
-            android:title="@string/nav_myStadiums" />
-        <item
             android:id="@+id/nav_addStadium"
             android:icon="@drawable/ic_baseline_add_business_24"
             android:title="@string/nav_addStadium" />
