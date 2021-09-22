@@ -93,7 +93,7 @@ public class SignIn extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, (arg0, arg1) -> SignIn.super.onBackPressed()).create().show();
     }
 
-    public void onRegisterBtnClicked(View view) {
+    public void registerBtnClicked(View view) {
         startActivity(new Intent(SignIn.this, SelectUserType.class));
     }
 }

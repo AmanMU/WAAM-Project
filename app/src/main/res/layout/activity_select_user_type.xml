@@ -23,52 +23,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="I am a..."
         android:textColor="@color/black"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/stadiumOwnerBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.61" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/stadiumOwnerBtn"
         android:layout_width="158dp"
         android:layout_height="130dp"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="48dp"
         android:fontFamily="@font/poppins_semibold"
         android:onClick="onUserTypeSelected"
         android:text="@string/stadium_owner"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintBottom_toTopOf="@+id/loginBtnInSignup"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/playerBtn"
         android:layout_width="155dp"
         android:layout_height="130dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="48dp"
         android:fontFamily="@font/poppins_semibold"
         android:onClick="onUserTypeSelected"
         android:text="@string/player"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtnInSignup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/stadiumOwnerBtn"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toEndOf="@+id/stadiumOwnerBtn" />
 
     <TextView
         android:id="@+id/loginBtnInSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:fontFamily="@font/poppins_semibold"
         android:onClick="onLoginBtnClicked"
         android:text="@string/loginBtnInSignup"
@@ -76,7 +73,6 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stadiumOwnerBtn" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
