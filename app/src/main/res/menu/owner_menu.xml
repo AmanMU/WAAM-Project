@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_ownerHome"
+            android:checked="true"
+            android:icon="@drawable/outline_home_24"
+            android:title="@string/nav_ownerHome" />
+        <item
+            android:id="@+id/nav_myStadiums"
+            android:icon="@drawable/outline_sports_soccer_24"
+            android:title="@string/nav_myStadiums" />
+        <item
+            android:id="@+id/nav_addStadium"
+            android:icon="@drawable/ic_baseline_add_business_24"
+            android:title="@string/nav_addStadium" />
+        <item
+            android:id="@+id/nav_ownerLogout"
+            android:icon="@drawable/outline_logout_24"
+            android:title="@string/nav_ownerLogout" />
+    </group>
+</menu>

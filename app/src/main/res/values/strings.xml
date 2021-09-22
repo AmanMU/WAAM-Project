@@ -38,6 +38,7 @@
     <string name="welcome_back">WELCOME BACK!</string>
     <string name="signupBtnInSignIn">Are you new here? Register</string>
     <string name="user">User</string>
+
     <string name="tv_headline">Register Your Stadium With book2play</string>
     <string name="et_stadiumPhone">Phone Number</string>
     <string name="et_stadiumName">Stadium Name</string>
@@ -47,4 +48,11 @@
     <string name="et_stadiumPrice">Session Price</string>
     <string name="btn_stadiumRegister">REGISTER</string>
     <string name="btn_addImage">Insert Image</string>
+
+    <string name="nav_ownerHome">Home</string>
+    <string name="nav_myStadiums">My Stadiums</string>
+    <string name="nav_ownerLogout">Logout</string>
+    <string name="nav_addStadium">Add Stadium</string>
+    <string name="openNavDrawer">Navigation Drawer Open</string>
+    <string name="closeNavDrawer">Navigation Drawer Close</string>
 </resources>

@@ -204,7 +204,7 @@ public class AddStadiums extends AppCompatActivity {
                             }, 1000);
                             Toast.makeText(AddStadiums.this, "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
                             StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price,
-                                    taskSnapshot.getStorage().getDownloadUrl().toString());
+                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
                             String uploadID = databaseRef.push().getKey();
                             databaseRef.child(uploadID).setValue(stadiumRegister);
                         }

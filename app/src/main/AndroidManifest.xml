@@ -12,14 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Book2play">
         <activity
+            android:name=".StadiumOwnerHome"
+            android:exported="true" >
+        </activity>
+        <activity
             android:name=".AddStadiums"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
         <activity
             android:name=".LoadingActivity"
             android:exported="true"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
