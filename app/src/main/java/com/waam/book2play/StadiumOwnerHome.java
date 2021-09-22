@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -51,7 +52,8 @@ public class StadiumOwnerHome extends AppCompatActivity implements NavigationVie
                 getSupportFragmentManager().beginTransaction().replace(R.id.oFragment_container, new MyStadiums()).commit();
                 break;
             case R.id.nav_addStadium:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.oFragment_container, new MyStadiums()).commit();
+                Intent myIntent = new Intent(StadiumOwnerHome.this, AddStadiums.class);
+                StadiumOwnerHome.this.startActivity(myIntent);
                 break;
             case R.id.nav_ownerLogout:
                 //mAuth.signOut();
