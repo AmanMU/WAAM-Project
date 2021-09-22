@@ -19,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -46,7 +48,8 @@ import java.util.Date;
 
 public class AddStadiums extends Fragment {
 
-    private TextInputLayout sPhoneLayout, sNameLayout, sAddressLayout, sOTLayout, sCTLayout, sPriceLayout;
+    private TextInputLayout sPhoneLayout, sNameLayout, sAddressLayout, sOTLayout, sCTLayout, sPriceLayout, sTypeLayout;
+    private AutoCompleteTextView sType;
     private TextInputEditText sPhone, sName, sAddress, sOT, sCT, sPrice;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Button sChooseImageButton;
@@ -86,6 +89,22 @@ public class AddStadiums extends Fragment {
         storageRef = FirebaseStorage.getInstance().getReference("stadiums");
         databaseRef = FirebaseDatabase.getInstance().getReference("stadiums");
         user = FirebaseAuth.getInstance().getCurrentUser();
+        sTypeLayout = v.findViewById(R.id.stadiumTypeLayout);
+        sType = v.findViewById(R.id.stadiumAutoComplete);
+
+        String[] items = new String[]{
+                "FootBall",
+                "Cricket",
+                "Badminton"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getActivity(),
+                R.layout.dropdown_item,
+                items
+        );
+
+        sType.setAdapter(adapter);
 
         sChooseImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,8 +210,19 @@ public class AddStadiums extends Fragment {
         }
     }
 
+    private boolean validateType(){
+        String type = sType.getText().toString().trim();
+        if (type.isEmpty()){
+            sTypeLayout.setError("Field Cannot be empty.");
+            return false;
+        }else {
+            sTypeLayout.setError(null);
+            return true;
+        }
+    }
+
     public void registerStadium(){
-        if(!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice()) {
+        if(!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice() | !validateType()) {
             return;
         }else if (imageURI != null){
             String email = user.getEmail();
@@ -202,6 +232,7 @@ public class AddStadiums extends Fragment {
             String ot = sOT.getText().toString().trim();
             String ct = sCT.getText().toString().trim();
             String price = sPrice.getText().toString().trim();
+            String type = sType.getText().toString().trim();
             StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageURI));
 
             registerTask = fileReference.putFile(imageURI)
@@ -219,7 +250,7 @@ public class AddStadiums extends Fragment {
                                         }
                                     }, 1000);
                                     Toast.makeText(getActivity(), "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
-                                    StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price,
+                                    StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price, type,
                                             uri.toString());
                                     String uploadID = databaseRef.push().getKey();
                                     databaseRef.child(uploadID).setValue(stadiumRegister);
