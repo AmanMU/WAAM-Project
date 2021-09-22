@@ -27,7 +27,7 @@ public class Home extends Fragment {
     private RecyclerView mRecyclerView;
     private StadiumAdapter stadiumAdapter;
     private DatabaseReference cardRef;
-    private List<Image> images;
+    private List<StadiumRegister> stadiums;
     private ShimmerFrameLayout mShimmerViewContainer;
 
     public View onCreateView(@NonNull @org.jetbrains.annotations.NotNull LayoutInflater inflater,
@@ -42,18 +42,18 @@ public class Home extends Fragment {
         mShimmerViewContainer = rootView.findViewById(R.id.shimmerFrameLayout);
 
 
-        images = new ArrayList<>();
-        cardRef = FirebaseDatabase.getInstance().getReference("test");
+        stadiums = new ArrayList<>();
+        cardRef = FirebaseDatabase.getInstance().getReference("stadiums");
 
         cardRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Image image = postSnapshot.getValue(Image.class);
-                    images.add(image);
+                    StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
+                    stadiums.add(stadium);
                 }
 
-                stadiumAdapter = new StadiumAdapter(getContext(), images);
+                stadiumAdapter = new StadiumAdapter(getContext(), stadiums);
                 mRecyclerView.setAdapter(stadiumAdapter);
                 mShimmerViewContainer.stopShimmer();
                 mShimmerViewContainer.setVisibility(View.GONE);

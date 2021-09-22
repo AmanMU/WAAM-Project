@@ -14,32 +14,32 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.ImageViewHolder> {
+public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder> {
 
     private Context mContext;
-    private List<Image> mStadiums;
+    private List<StadiumRegister> mStadiums;
 
-    public StadiumAdapter(Context context, List<Image> stadiums) {
+    public StadiumAdapter(Context context, List<StadiumRegister> stadiums) {
         mStadiums = stadiums;
         mContext = context;
     }
 
     @NonNull
     @Override
-    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public StadiumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.stadium_card_layout, parent, false);
-        return new ImageViewHolder(view);
+        return new StadiumViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        Image currentImageCard = mStadiums.get(position);
-        holder.stadiumName.setText(currentImageCard.getName());
-        holder.stadiumLocation.setText(currentImageCard.getLocation());
-        holder.stadiumClosingTime.setText(currentImageCard.getClosingTime());
-        holder.stadiumPrice.setText(currentImageCard.getPrice());
+    public void onBindViewHolder(@NonNull StadiumViewHolder holder, int position) {
+        StadiumRegister currentImageCard = mStadiums.get(position);
+        holder.stadiumName.setText(currentImageCard.getsName());
+        holder.stadiumLocation.setText(currentImageCard.getsLocation());
+        holder.stadiumClosingTime.setText(currentImageCard.getsCT());
+        holder.stadiumPrice.setText(currentImageCard.getsPrice());
 
-        Picasso.get().load(currentImageCard.getImage())
+        Picasso.get().load(currentImageCard.getsImageURL())
                 .fit()
                 .centerCrop()
                 .into(holder.stadiumImage);
@@ -51,11 +51,11 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.ImageVie
         return mStadiums.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public class StadiumViewHolder extends RecyclerView.ViewHolder {
         public TextView stadiumName,stadiumLocation,stadiumClosingTime,stadiumPrice;
         public ImageView stadiumImage;
 
-        public ImageViewHolder(@NonNull View itemView) {
+        public StadiumViewHolder(@NonNull View itemView) {
             super(itemView);
 
             stadiumName = itemView.findViewById(R.id.sName);

@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -195,18 +196,23 @@ public class AddStadiums extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void run() {
-                                    sUploadProgress.setProgress(0);
+                                public void onSuccess(Uri uri) {
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            sUploadProgress.setProgress(0);
+                                        }
+                                    }, 1000);
+                                    Toast.makeText(AddStadiums.this, "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
+                                    StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price,
+                                            uri.toString());
+                                    String uploadID = databaseRef.push().getKey();
+                                    databaseRef.child(uploadID).setValue(stadiumRegister);
                                 }
-                            }, 1000);
-                            Toast.makeText(AddStadiums.this, "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
-                            StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price,
-                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-                            String uploadID = databaseRef.push().getKey();
-                            databaseRef.child(uploadID).setValue(stadiumRegister);
+                            });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
