@@ -14,6 +14,9 @@
         <activity
             android:name=".StadiumOwnerHome"
             android:exported="true" >
+            <intent-filter>
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".AddStadiums"

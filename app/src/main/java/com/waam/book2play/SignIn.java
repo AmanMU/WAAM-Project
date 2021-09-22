@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,13 +23,23 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignIn extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private DatabaseReference userRef;
     private TextInputEditText edtEmail, edtPassword;
     private TextInputLayout edtEmailLayout, edtPwdLayout;
     private ProgressBar progressBar;
+
+    private static final String TYPE_PLAYER = "Player";
+    private static final String TYPE_STADIUM_OWNER = "StadiumOwner";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,7 @@ public class SignIn extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         mAuth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance().getReference("Users");
 
         edtEmail = findViewById(R.id.signinEmailTextField);
         edtPassword = findViewById(R.id.signinPasswordTextField);
@@ -74,10 +87,40 @@ public class SignIn extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
-                        startActivity(new Intent(SignIn.this, MainActivity.class));
-                        finish();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID = user.getUid();
+                        userRef = FirebaseDatabase.getInstance().getReference("Users");
+                        userRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User currentUser = dataSnapshot.getValue(User.class);
+
+                                if(currentUser != null && currentUser.type.equals(TYPE_PLAYER)) {
+                                    Log.d("Type", currentUser.type);
+                                    startActivity(new Intent(SignIn.this, MainActivity.class));
+                                    finish();
+                                }
+                                else if(currentUser != null && currentUser.type.equals(TYPE_STADIUM_OWNER)) {
+                                    Log.d("Type", currentUser.type.toString());
+                                    startActivity(new Intent(SignIn.this, StadiumOwnerHome.class));
+                                    finish();
+                                }
+                                else
+                                    Toast.makeText(SignIn.this, currentUser.type.toString(), Toast.LENGTH_LONG).show();
+
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Toast.makeText(SignIn.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+
                     }
                     else {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(SignIn.this,"Login failed! Please check email and password", Toast.LENGTH_LONG).show();
                     }
                 });
