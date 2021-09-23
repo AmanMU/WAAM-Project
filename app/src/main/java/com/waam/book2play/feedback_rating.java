@@ -111,7 +111,7 @@ public class feedback_rating extends AppCompatActivity {
 
 
                 //call feedbackhelper class,inside the constructor pass all the values which came from the inputted field
-                FeedbackHelperClass helperClass = new FeedbackHelperClass(useremail, feedback,"ID1234",rating);
+                FeedbackHelperClass helperClass = new FeedbackHelperClass(useremail, feedback,rating);
 
                 //to set values inside the feedback
                 String id=reference.push().getKey();
