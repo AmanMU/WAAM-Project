@@ -2,8 +2,6 @@ package com.waam.book2play;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,8 +33,7 @@ public class LoadingActivity extends AppCompatActivity {
             if (user == null) {
                 startActivity(new Intent(LoadingActivity.this, SignIn.class));
                 finish();
-            }
-            else {
+            } else {
                 String userID = user.getUid();
                 userRef = FirebaseDatabase.getInstance().getReference("Users");
                 userRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -44,18 +41,14 @@ public class LoadingActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User currentUser = snapshot.getValue(User.class);
 
-                        if(currentUser != null && currentUser.type.equals(TYPE_PLAYER)) {
-                            Log.d("Type", currentUser.type);
-                            startActivity(new Intent(LoadingActivity.this, MainActivity.class));
+                        if (currentUser != null && currentUser.type.equals(TYPE_PLAYER)) {
+                            startActivity(new Intent(LoadingActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
-                        }
-                        else if(currentUser != null && currentUser.type.equals(TYPE_STADIUM_OWNER)) {
-                            Log.d("Type", currentUser.type.toString());
-                            startActivity(new Intent(LoadingActivity.this, StadiumOwnerHome.class));
+                        } else if (currentUser != null && currentUser.type.equals(TYPE_STADIUM_OWNER)) {
+                            startActivity(new Intent(LoadingActivity.this, StadiumOwnerHome.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
-                        }
-                        else
-                            Toast.makeText(LoadingActivity.this, currentUser.type.toString(), Toast.LENGTH_LONG).show();
+                        } else
+                            Toast.makeText(LoadingActivity.this, "Error", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

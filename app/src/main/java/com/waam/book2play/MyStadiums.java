@@ -33,7 +33,7 @@ public class MyStadiums extends Fragment {
 
     public View onCreateView(@NonNull @org.jetbrains.annotations.NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Stadiums");
-        View rootView =  inflater.inflate(R.layout.activity_my_stadiums, container, false);
+        View rootView = inflater.inflate(R.layout.activity_my_stadiums, container, false);
         mRecyclerView = rootView.findViewById(R.id.stadiumRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -46,7 +46,7 @@ public class MyStadiums extends Fragment {
         cardRef.orderByChild("sEmail").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot postSnapshot : snapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
                     stadium.setsKey(postSnapshot.getKey());
                     stadiums.add(stadium);
@@ -58,7 +58,7 @@ public class MyStadiums extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

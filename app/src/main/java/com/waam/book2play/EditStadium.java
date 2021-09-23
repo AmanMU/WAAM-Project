@@ -1,17 +1,17 @@
 package com.waam.book2play;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -99,11 +99,11 @@ public class EditStadium extends AppCompatActivity {
             public void onClick(View view) {
                 MaterialTimePicker picker = new
                         MaterialTimePicker.Builder()
-                                .setTimeFormat(TimeFormat.CLOCK_12H)
-                                .setHour(12)
-                                .setMinute(10)
-                                .build();
-                picker.show(getSupportFragmentManager(),"close");
+                        .setTimeFormat(TimeFormat.CLOCK_12H)
+                        .setHour(12)
+                        .setMinute(10)
+                        .build();
+                picker.show(getSupportFragmentManager(), "close");
                 picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -126,7 +126,7 @@ public class EditStadium extends AppCompatActivity {
                         .setHour(12)
                         .setMinute(10)
                         .build();
-                picker.show(getSupportFragmentManager(),"open");
+                picker.show(getSupportFragmentManager(), "open");
                 picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -247,7 +247,7 @@ public class EditStadium extends AppCompatActivity {
             stadiumRef.updateChildren(stadiumUpdates, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                    startActivity(new Intent(EditStadium.this,StadiumOwnerHome.class));
+                    startActivity(new Intent(EditStadium.this, StadiumOwnerHome.class));
                 }
             });
         }

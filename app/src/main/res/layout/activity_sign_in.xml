@@ -6,24 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".SignUp">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:liftOnScroll="true">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/signup_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:backgroundTint="@color/white" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
         android:id="@+id/book2playLogo"
@@ -33,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/book2play"
         tools:ignore="ImageContrastCheck" />
 
@@ -104,26 +86,27 @@
 
     <TextView
         android:id="@+id/textView4"
+        style="@style/Widget.AppCompat.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/welcome_back"
-        android:textColor="#000000"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/signinEmailLayout"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/loginBtnInSignup2"
+        style="@style/Widget.AppCompat.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/poppins_semibold"
+        android:minHeight="48dp"
         android:onClick="registerBtnClicked"
         android:text="@string/signupBtnInSignIn"
-        android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

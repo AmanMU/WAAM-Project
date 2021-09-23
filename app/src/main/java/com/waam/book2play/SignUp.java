@@ -28,6 +28,8 @@ public class SignUp extends AppCompatActivity {
     private TextInputEditText edtName,edtEmail, edtPassword;
     private TextInputLayout edtNameLayout,edtEmailLayout, edtPwdLayout;
     private ProgressBar progressBar;
+    private static final String TYPE_PLAYER = "Player";
+    private static final String TYPE_STADIUM_OWNER = "StadiumOwner";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class SignUp extends AppCompatActivity {
 
         Toolbar signupToolbar = findViewById(R.id.signup_toolbar);
         setSupportActionBar(signupToolbar);
+        getSupportActionBar().setTitle("Registration");
 
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
@@ -100,9 +103,12 @@ public class SignUp extends AppCompatActivity {
                                     if(task1.isSuccessful()) {
                                         progressBar.setVisibility(View.GONE);
                                         Toast.makeText(SignUp.this, "Registration Successful!",Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(SignUp.this,MainActivity.class));
+                                        if (type.equals(TYPE_PLAYER)) {
+                                            startActivity(new Intent(SignUp.this, MainActivity.class));
+                                        } else {
+                                            startActivity(new Intent(SignUp.this, StadiumOwnerHome.class));
+                                        }
                                         finish();
-                                        Log.d("Success", "Success");
                                     }
                                     else {
                                         progressBar.setVisibility(View.GONE);

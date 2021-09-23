@@ -1,10 +1,5 @@
 package com.waam.book2play;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
@@ -25,6 +20,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -139,97 +139,97 @@ public class AddStadiums extends Fragment {
         return v;
     }
 
-    private boolean validatePhone(){
+    private boolean validatePhone() {
         String phone = sPhone.getText().toString().trim();
-        if (phone.isEmpty()){
+        if (phone.isEmpty()) {
             sPhoneLayout.setError("Field Cannot be empty.");
             return false;
-        }else if (!(phone.length()==10)){
+        } else if (!(phone.length() == 10)) {
             sPhoneLayout.setError("Phone number should be 10 digits.");
             return false;
-        }else{
+        } else {
             sPhoneLayout.setError(null);
             return true;
         }
     }
 
-    private boolean validateStadiumName(){
+    private boolean validateStadiumName() {
         String sname = sName.getText().toString().trim();
-        if (sname.isEmpty()){
+        if (sname.isEmpty()) {
             sNameLayout.setError("Field Cannot be empty.");
             return false;
-        }else{
+        } else {
             sNameLayout.setError(null);
             return true;
         }
     }
 
-    private boolean validateLocation(){
+    private boolean validateLocation() {
         String location = sAddress.getText().toString().trim();
-        if (location.isEmpty()){
+        if (location.isEmpty()) {
             sAddressLayout.setError("Field Cannot be empty.");
             return false;
-        }else {
+        } else {
             sAddressLayout.setError(null);
             return true;
         }
     }
 
-    private boolean validateOpenTime(){
+    private boolean validateOpenTime() {
         String ot = sOT.getText().toString().trim();
-        if (ot.isEmpty()){
+        if (ot.isEmpty()) {
             sOTLayout.setError("Field Cannot be empty.");
             return false;
-        }else {
+        } else {
             sOTLayout.setError(null);
             return true;
         }
     }
 
-    private boolean validateCloseTime(){
+    private boolean validateCloseTime() {
         String ct = sCT.getText().toString().trim();
-        if (ct.isEmpty()){
+        if (ct.isEmpty()) {
             sCTLayout.setError("Field Cannot be empty.");
             return false;
-        }else {
+        } else {
             sCTLayout.setError(null);
             return true;
         }
     }
 
-    private boolean validatePrice(){
+    private boolean validatePrice() {
         String price = sPrice.getText().toString().trim();
-        if (price.isEmpty()){
+        if (price.isEmpty()) {
             sPriceLayout.setError("Field Cannot be empty.");
             return false;
-        }else {
+        } else {
             sPriceLayout.setError(null);
             return true;
         }
     }
 
-    private boolean validateType(){
+    private boolean validateType() {
         String type = sType.getText().toString().trim();
-        if (type.isEmpty()){
+        if (type.isEmpty()) {
             sTypeLayout.setError("Field Cannot be empty.");
             return false;
-        }else {
+        } else {
             sTypeLayout.setError(null);
             return true;
         }
     }
 
-    public void registerStadium(){
-        if(!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice() | !validateType()) {
+    public void registerStadium() {
+        if (!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice() | !validateType()) {
             return;
-        }else if (imageURI != null){
+        } else if (imageURI != null) {
             String email = user.getEmail();
             String phone = sPhone.getText().toString().trim();
             String sname = sName.getText().toString().trim();
             String location = sAddress.getText().toString().trim();
             String ot = sOT.getText().toString().trim();
             String ct = sCT.getText().toString().trim();
-            String price = sPrice.getText().toString().trim();
+            Integer price = Integer.parseInt(sPrice.getText().toString().trim());
             String type = sType.getText().toString().trim();
             StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageURI));
 
@@ -270,18 +270,18 @@ public class AddStadiums extends Fragment {
                         }
                     });
 
-        }else {
+        } else {
             Toast.makeText(getActivity(), "Please add an image of your stadium.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri) {
         ContentResolver cR = requireActivity().getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void openImageChooser(){
+    private void openImageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -292,13 +292,13 @@ public class AddStadiums extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             imageURI = data.getData();
             sImageView.setImageURI(imageURI);
         }
     }
 
-    public void setCT(){
+    public void setCT() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
                 android.R.style.Theme_Material_Light_Dialog,
@@ -330,7 +330,7 @@ public class AddStadiums extends Fragment {
         timePickerDialog.show();
     }
 
-    public void setOT(){
+    public void setOT() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
                 android.R.style.Theme_Material_Light_Dialog,

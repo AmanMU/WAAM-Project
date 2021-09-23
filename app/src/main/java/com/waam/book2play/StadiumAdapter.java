@@ -17,8 +17,8 @@ import java.util.List;
 
 public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder> {
 
-    private Context mContext;
-    private List<StadiumRegister> mStadiums;
+    private final Context mContext;
+    private final List<StadiumRegister> mStadiums;
 
     public StadiumAdapter(Context context, List<StadiumRegister> stadiums) {
         mStadiums = stadiums;
@@ -40,7 +40,8 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
         holder.stadiumLocation.setText(currentStadium.getsLocation());
         String time = "Open from " + currentStadium.getsOT() + " to " + currentStadium.getsCT();
         holder.stadiumClosingTime.setText(time);
-        holder.stadiumPrice.setText(currentStadium.getsPrice());
+        String price = "Rs. " + currentStadium.getsPrice();
+        holder.stadiumPrice.setText(price);
 
         Picasso.get().load(currentStadium.getsImageURL())
                 .fit()
@@ -60,7 +61,7 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.StadiumV
     }
 
     public class StadiumViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView stadiumName,stadiumLocation,stadiumClosingTime,stadiumPrice;
+        public TextView stadiumName, stadiumLocation, stadiumClosingTime, stadiumPrice;
         public ImageView stadiumImage;
 
         public StadiumViewHolder(@NonNull View itemView) {

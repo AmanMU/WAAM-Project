@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.List;
 
@@ -47,7 +44,7 @@ public class MiniStadiumAdapter extends RecyclerView.Adapter<MiniStadiumAdapter.
 
     public class MiniStadiumViewHolder extends RecyclerView.ViewHolder {
         public TextView stadiumName;
-        public Button editBtn,deleteBtn;
+        public Button editBtn, deleteBtn;
 
         public MiniStadiumViewHolder(@NonNull View itemView) {
             super(itemView);

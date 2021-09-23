@@ -96,7 +96,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setTitle("Really Exit?")
                     .setMessage("Are you sure you want to exit?")
                     .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, (arg0, arg1) -> MainActivity.super.onBackPressed()).create().show();
+                    .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                        finishAffinity();
+                        finish();
+                        MainActivity.super.onBackPressed();
+                    }).create().show();
         }
     }
 
