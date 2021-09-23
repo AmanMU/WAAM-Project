@@ -81,6 +81,7 @@ public class StadiumOwnerHome extends AppCompatActivity implements NavigationVie
         }
     }
 
+    //responding to click
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
