@@ -306,6 +306,7 @@ public class AddStadiums extends Fragment {
         }
     }
 
+    //time pickers
     public void setCT() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
