@@ -46,6 +46,7 @@ public class MyStadiums extends Fragment {
         cardRef.orderByChild("sEmail").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                stadiums.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
                     stadium.setsKey(postSnapshot.getKey());

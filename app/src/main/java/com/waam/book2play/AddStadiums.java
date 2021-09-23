@@ -229,7 +229,7 @@ public class AddStadiums extends Fragment {
             String location = sAddress.getText().toString().trim();
             String ot = sOT.getText().toString().trim();
             String ct = sCT.getText().toString().trim();
-            Integer price = Integer.parseInt(sPrice.getText().toString().trim());
+            String price = sPrice.getText().toString().trim();
             String type = sType.getText().toString().trim();
             StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageURI));
 
