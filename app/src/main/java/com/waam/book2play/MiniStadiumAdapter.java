@@ -59,9 +59,14 @@ public class MiniStadiumAdapter extends RecyclerView.Adapter<MiniStadiumAdapter.
                 @Override
                 public void onClick(View view) {
                     Context context = view.getContext();
-                    int clickPosition = getAdapterPosition();  // get position of clicked item
-//                    StadiumRegister stadium = mStadiums.get(clickPosition);
-                    Toast.makeText(context, "EDIT BUTTON OF " + clickPosition + " CLICKED",Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(context, EditStadium.class);
+
+                    int clickPosition = getAdapterPosition();
+
+                    StadiumRegister stadium = mStadiums.get(clickPosition);
+                    intent.putExtra("stadium", stadium);
+                    context.startActivity(intent);
                 }
             });
             deleteBtn.setOnClickListener(new View.OnClickListener() {

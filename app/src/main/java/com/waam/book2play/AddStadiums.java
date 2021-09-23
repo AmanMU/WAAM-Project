@@ -14,7 +14,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,7 +81,7 @@ public class AddStadiums extends Fragment {
         sCTLayout = v.findViewById(R.id.closeTimeLayout);
         sPriceLayout = v.findViewById(R.id.stadiumPriceLayout);
         sChooseImageButton = v.findViewById(R.id.btn_addImage);
-        sRegisterButton = v.findViewById(R.id.btn_stadiumRegister);
+        sRegisterButton = v.findViewById(R.id.btn_updateStadium);
         sImageView = v.findViewById(R.id.iv_sUploadImage);
         sUploadProgress = v.findViewById(R.id.progressBar);
         storageRef = FirebaseStorage.getInstance().getReference("stadiums");
@@ -93,7 +91,7 @@ public class AddStadiums extends Fragment {
         sType = v.findViewById(R.id.stadiumAutoComplete);
 
         String[] items = new String[]{
-                "FootBall",
+                "Futsal",
                 "Cricket",
                 "Badminton"
         };
@@ -300,7 +298,7 @@ public class AddStadiums extends Fragment {
         }
     }
 
-    private void setCT(){
+    public void setCT(){
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
                 android.R.style.Theme_Material_Light_Dialog,
@@ -332,7 +330,7 @@ public class AddStadiums extends Fragment {
         timePickerDialog.show();
     }
 
-    private void setOT(){
+    public void setOT(){
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
                 android.R.style.Theme_Material_Light_Dialog,

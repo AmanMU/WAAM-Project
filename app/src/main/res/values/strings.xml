@@ -53,4 +53,6 @@
     <string name="closeNavDrawer">Navigation Drawer Close</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="stadiumTypeTextField">Stadium Type</string>
+    <string name="edit_tv_headline">Update Your Stadium Details</string>
+    <string name="btn_stadiumUpdate">Update</string>
 </resources>

@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Book2play">
         <activity
+            android:name=".EditStadium"
+            android:exported="true"
+            android:parentActivityName=".StadiumOwnerHome"/>
+        <activity
             android:name=".SingleStadium"
             android:exported="true"
             android:parentActivityName=".MainActivity" />
