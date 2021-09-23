@@ -4,7 +4,7 @@ package com.waam.book2play;
 public class FeedbackHelperClass {
 
     //variables need to insert to database
-    String email,feedback,stadiumID;
+    String email,feedback;
     Float rating;
 
     //for fire base to avoid error we need to implement an empty constructor
@@ -14,10 +14,9 @@ public class FeedbackHelperClass {
     //constructors
 
 
-    public FeedbackHelperClass(String email, String feedback, String stadiumID, Float rating) {
+    public FeedbackHelperClass(String email, String feedback, Float rating) {
         this.email = email;
         this.feedback = feedback;
-        this.stadiumID = stadiumID;
         this.rating = rating;
     }
 
@@ -35,14 +34,6 @@ public class FeedbackHelperClass {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
-    }
-
-    public String getStadiumID() {
-        return stadiumID;
-    }
-
-    public void setStadiumID(String stadiumId) {
-        this.stadiumID= stadiumID;
     }
 
     public Float getRating() {
