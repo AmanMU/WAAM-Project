@@ -13,13 +13,14 @@ public class StadiumRegister implements Serializable {
     private String sCT;
     private String sPrice;
     private String sType;
+    private String sNoSessions;
     private String sImageURL;
     private String sKey;
 
     public StadiumRegister() {
     }
 
-    public StadiumRegister(String sEmail, String sPhone, String sName, String sLocation, String sOT, String sCT, String sPrice, String sType, String sImageURL) {
+    public StadiumRegister(String sEmail, String sPhone, String sName, String sLocation, String sOT, String sCT, String sPrice, String sType, String sNoSessions, String sImageURL) {
         this.sEmail = sEmail;
         this.sPhone = sPhone;
         this.sName = sName;
@@ -28,6 +29,7 @@ public class StadiumRegister implements Serializable {
         this.sCT = sCT;
         this.sPrice = sPrice;
         this.sType = sType;
+        this.sNoSessions = sNoSessions;
         this.sImageURL = sImageURL;
     }
 
@@ -93,6 +95,14 @@ public class StadiumRegister implements Serializable {
 
     public void setsType(String sType) {
         this.sType = sType;
+    }
+
+    public String getsNoSessions() {
+        return sNoSessions;
+    }
+
+    public void setsNoSessions(String sNoSessions) {
+        this.sNoSessions = sNoSessions;
     }
 
     public String getsImageURL() {
