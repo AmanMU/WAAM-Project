@@ -222,10 +222,11 @@ public class EditStadium extends AppCompatActivity {
         }
     }
 
-    public void updateStadium(View view) {
+    public void updateStadium(View view) throws Exception {
         if (!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice() | !validateType()) {
             return;
         } else {
+            NoOfSessionsCal sessionNumber = new NoOfSessionsCal();
             String phone = sPhone.getText().toString().trim();
             String sname = sName.getText().toString().trim();
             String location = sAddress.getText().toString().trim();
@@ -233,6 +234,7 @@ public class EditStadium extends AppCompatActivity {
             String ct = sCT.getText().toString().trim();
             String price = sPrice.getText().toString().trim();
             String type = sType.getText().toString().trim();
+            String noSessions = sessionNumber.calcDif(ot, ct);
 
             DatabaseReference stadiumRef = databaseRef.child(stadium.getsKey());
             Map<String, Object> stadiumUpdates = new HashMap<>();
@@ -243,6 +245,7 @@ public class EditStadium extends AppCompatActivity {
             stadiumUpdates.put("sCT", ct);
             stadiumUpdates.put("sPrice", price);
             stadiumUpdates.put("sType", type);
+            stadiumUpdates.put("sNoSessions", noSessions);
 
             stadiumRef.updateChildren(stadiumUpdates, new DatabaseReference.CompletionListener() {
                 @Override
