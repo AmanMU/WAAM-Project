@@ -143,6 +143,7 @@ public class AddStadiums extends Fragment {
         return v;
     }
 
+    //validation of inputs
     private boolean validatePhone() {
         String phone = sPhone.getText().toString().trim();
         if (phone.isEmpty()) {
