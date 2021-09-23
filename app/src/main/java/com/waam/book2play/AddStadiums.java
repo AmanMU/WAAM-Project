@@ -224,6 +224,7 @@ public class AddStadiums extends Fragment {
         }
     }
 
+    //Creating the stadium
     public void registerStadium() throws Exception {
         if (!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice() | !validateType()) {
             return;
