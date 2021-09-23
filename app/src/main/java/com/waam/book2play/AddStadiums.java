@@ -255,7 +255,7 @@ public class AddStadiums extends Fragment {
                                             sUploadProgress.setProgress(0);
                                         }
                                     }, 1000);
-                                    Toast.makeText(getActivity(), "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Stadium added successfully.", Toast.LENGTH_SHORT).show();
                                     StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price, type, noSessions,
                                             uri.toString());
                                     String uploadID = databaseRef.push().getKey();
