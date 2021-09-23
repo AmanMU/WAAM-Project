@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.waam.book2play" >
+    package="com.waam.book2play">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,53 +10,56 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Book2play" >
-        <activity
-            android:name=".rating"
-            android:exported="true" >
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
-
-
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
-
-
-        </activity>
+        android:theme="@style/Theme.Book2play">
         <activity
             android:name=".feedback_view"
-            android:exported="true" >
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".feedback_rating"
-            android:exported="true" >
+            android:exported="true" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+        <activity
+            android:name=".EditStadium"
+            android:exported="true"
+            android:parentActivityName=".StadiumOwnerHome" />
+        <activity
+            android:name=".SingleStadium"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".StadiumOwnerHome"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".LoadingActivity"
+            android:exported="true"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignIn"
+            android:exported="true" />
+        <activity
+            android:name=".SelectUserType"
+            android:exported="true" />
+        <activity
+            android:name=".SignUp"
+            android:exported="true"
+            android:parentActivityName=".SelectUserType" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name" >
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            android:label="@string/app_name">
+            <intent-filter>
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
         </activity>
 
         <meta-data
