@@ -58,6 +58,7 @@ public class SingleStadium extends AppCompatActivity {
         user= FirebaseAuth.getInstance().getCurrentUser();
         ratingcount=findViewById(R.id.count);
 
+        //created a custom hook to display thank you message
         LayoutInflater inflater=getLayoutInflater();
         View layout =inflater.inflate(R.layout.custom_toast,(ViewGroup) findViewById(R.id.toast_layout));
 
@@ -87,9 +88,6 @@ public class SingleStadium extends AppCompatActivity {
 
 
 
-
-        Float ratingNumber = ratingBar.getRating(); // get rating number from a rating bar
-        int numberOfStars = ratingBar.getNumStars(); // get total number of stars of rating bar
 
 
         //use to state the path of the reference in the database,which one should called
