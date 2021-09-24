@@ -143,6 +143,7 @@ public class AddStadiums extends Fragment {
         return v;
     }
 
+    //validation of inputs
     private boolean validatePhone() {
         String phone = sPhone.getText().toString().trim();
         if (phone.isEmpty()) {
@@ -223,6 +224,7 @@ public class AddStadiums extends Fragment {
         }
     }
 
+    //Creating the stadium
     public void registerStadium() throws Exception {
         if (!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice() | !validateType()) {
             return;
@@ -253,7 +255,7 @@ public class AddStadiums extends Fragment {
                                             sUploadProgress.setProgress(0);
                                         }
                                     }, 1000);
-                                    Toast.makeText(getActivity(), "Stadium successfully registered.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Stadium added successfully.", Toast.LENGTH_SHORT).show();
                                     StadiumRegister stadiumRegister = new StadiumRegister(email, phone, sname, location, ot, ct, price, type, noSessions,
                                             uri.toString());
                                     String uploadID = databaseRef.push().getKey();
@@ -304,6 +306,7 @@ public class AddStadiums extends Fragment {
         }
     }
 
+    //time pickers
     public void setCT() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
