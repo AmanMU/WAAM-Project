@@ -260,6 +260,7 @@ public class AddStadiums extends Fragment {
                                             uri.toString());
                                     String uploadID = databaseRef.push().getKey();
                                     databaseRef.child(uploadID).setValue(stadiumRegister);
+                                    startActivity(new Intent(getActivity(), getActivity().getClass()));
                                 }
                             });
                         }
