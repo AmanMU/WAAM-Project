@@ -11,12 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Book2play">
-        <activity
-            android:name=".feedback_view"
-            android:exported="true" />
-        <activity
-            android:name=".feedback_rating"
-            android:exported="true" />
 
         <activity
             android:name=".EditStadium"
