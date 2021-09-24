@@ -90,7 +90,6 @@ public class SignUp extends AppCompatActivity {
             edtPwdLayout.requestFocus();
             return;
         }
-        Log.d("TestLog", name + " " + type + " " + email + " " + password );
 
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -117,8 +116,7 @@ public class SignUp extends AppCompatActivity {
                                     }
                                 });
                     } else {
-                        Toast.makeText(SignUp.this, "Oops! Failed to Register!",Toast.LENGTH_LONG).show();
-                        Log.d("Auth", "Auth Fail");
+                        Toast.makeText(SignUp.this, "Error! Please check your email and try again!",Toast.LENGTH_LONG).show();
                     }
                 });
 
