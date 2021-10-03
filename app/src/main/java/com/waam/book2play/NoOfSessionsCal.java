@@ -3,6 +3,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class NoOfSessionsCal {
+    public NoOfSessionsCal() {
+    }
+
     public String calcDif(String time1, String time2) throws Exception {
         String t1, t2;
         int hour1, hour2;
