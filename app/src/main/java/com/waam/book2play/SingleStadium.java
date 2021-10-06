@@ -40,8 +40,11 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class SingleStadium extends AppCompatActivity {
@@ -155,9 +158,6 @@ public class SingleStadium extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar currentTime = Calendar.getInstance();
 
-
-
-
                         Calendar c=Calendar.getInstance();
                         c.set(Calendar.HOUR_OF_DAY,hourOfDay);
                         c.set(Calendar.MINUTE,minute);
@@ -230,31 +230,55 @@ public class SingleStadium extends AppCompatActivity {
 //        });
         
         book_btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                if (timeselected == null || dateselected == null){
-                    Toast.makeText(SingleStadium.this, "Please select date and time",Toast.LENGTH_LONG).show();
-                }else {
-                    bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
-                    String key = dateselected + timeselected;
+                if (timeselected == null || dateselected == null) {
+                    Toast.makeText(SingleStadium.this, "Please select date and time", Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                    bookingReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                Toast.makeText(SingleStadium.this, "Booking already exists in the selected date and time", Toast.LENGTH_LONG).show();
-                            } else {
-                                book = new Booking(timeselected, dateselected, user.getEmail());
-                                bookingReference.child(key).setValue(book);
-                                Toast.makeText(SingleStadium.this, "Booking added successfully",Toast.LENGTH_LONG).show();
-                            }
+//                        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+                        LocalTime openingTime = LocalTime.parse(stadium.getsOT(), DateTimeFormatter.ofPattern(
+                                "hh:mm a" ,Locale.US));
+                        LocalTime closingTime = LocalTime.parse(stadium.getsCT(),DateTimeFormatter.ofPattern(
+                                "hh:mm a" ,Locale.US));
+
+
+
+                        Log.d("open",openingTime.toString());
+                        Log.d("close",closingTime.toString());
+
+                        LocalTime userDate = LocalTime.parse(timeselected,DateTimeFormatter.ofPattern(
+                                "k:mm a" ,Locale.US));
+                        Log.d("userDate",userDate.toString());
+
+                        if (userDate.isAfter(openingTime) && userDate.isBefore(closingTime)) {
+                            bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
+                            String key = dateselected + timeselected;
+
+                            bookingReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        Toast.makeText(SingleStadium.this, "Booking already exists in the selected date and time", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        book = new Booking(timeselected, dateselected, user.getEmail());
+                                        bookingReference.child(key).setValue(book);
+                                        Toast.makeText(SingleStadium.this, "Booking added successfully",Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.d("Booking error", error.getMessage());
+                                }
+                            });
+                        }else{
+                            Toast.makeText(SingleStadium.this, "Enter time between " +stadium.getsOT()+ " and " + stadium.getsCT(), Toast.LENGTH_LONG).show();
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.d("Booking error", error.getMessage());
-                        }
-                    });
+
 
                 }
             }
