@@ -8,9 +8,9 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -19,6 +19,69 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF">
+
+
+            <TextView
+                android:id="@+id/tx_date"
+                android:layout_width="140dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="24dp"
+                android:text="Selected Date"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/btn_selectdate"
+                app:layout_constraintEnd_toStartOf="@+id/tx_time"
+                app:layout_constraintHorizontal_bias="0.093"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/tx_time"
+                android:layout_width="140dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="24dp"
+                android:text="Selected Time"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/btn_timeselect"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btn_selectdate"
+                android:layout_width="150dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginBottom="44dp"
+                android:text="Select Date"
+                app:layout_constraintBottom_toTopOf="@id/btn_book"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btn_timeselect"
+                android:layout_width="150dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="44dp"
+                android:text="Select Time"
+                app:layout_constraintBottom_toTopOf="@+id/btn_book"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btn_book"
+                android:layout_width="130dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="40dp"
+                android:text="Book Now"
+                app:layout_constraintBottom_toTopOf="@+id/count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.937"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/count"
@@ -125,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="34dp"
+                android:layout_marginBottom="84dp"
                 android:background="@drawable/custom_button"
                 android:fontFamily="@font/poppins"
                 android:text="Rate"
@@ -137,12 +200,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="TouchTargetSizeCheck" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
