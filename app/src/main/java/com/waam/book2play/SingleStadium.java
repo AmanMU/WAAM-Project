@@ -164,7 +164,7 @@ public class SingleStadium extends AppCompatActivity {
                         if(dateselected != null){
                             myDate = dateselected + " " + time;
                         }else{
-                            Toast.makeText(getApplicationContext(),"Please select a date first",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Please select a date first",Toast.LENGTH_LONG).show();
                             return ;
                         }
 
@@ -182,7 +182,7 @@ public class SingleStadium extends AppCompatActivity {
                         Log.d("selected", String.valueOf(selectedTimeInMillis));
                         //Time Validation
                         if(selectedTimeInMillis < currentTimeInMillis){
-                            Toast.makeText(getApplicationContext(),"Please choose a time past current time",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Please choose a time past current time",Toast.LENGTH_LONG).show();
                         }else{
                             selectedTime.setText("Selected Time : " + time);
                             timeselected = time;
