@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/materialCardView"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="100dp"
     android:layout_marginStart="0dp"
     android:layout_marginTop="0dp"
     android:layout_marginEnd="0dp"
     android:layout_marginBottom="0dp"
+    android:padding="0px"
     app:cardBackgroundColor="#00FFFFFF"
     app:cardCornerRadius="0dp"
-    app:cardElevation="1px"
+    app:cardElevation="1dp"
     app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true"
+    app:cardUseCompatPadding="false"
     app:layout_constraintTop_toBottomOf="@+id/card"
     app:strokeColor="#FFFFFF"
     app:strokeWidth="0dp">
@@ -24,18 +25,47 @@
 
         <TextView
             android:id="@+id/myStadiumName"
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="299dp"
             android:layout_height="31dp"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/poppins"
             android:text="@string/stadium_name"
-            style="@style/TextAppearance.AppCompat.Headline"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/stadiumEditBtn"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25" />
+
+        <TextView
+            android:id="@+id/noOfSessions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/_0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/myStadiumName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myStadiumName"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/stadiumPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/_0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/myStadiumName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noOfSessions"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/stadiumDeleteBtn"

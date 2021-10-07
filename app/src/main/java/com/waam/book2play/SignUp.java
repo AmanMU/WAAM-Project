@@ -116,6 +116,7 @@ public class SignUp extends AppCompatActivity {
                                     }
                                 });
                     } else {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(SignUp.this, "Error! Please check your email and try again!",Toast.LENGTH_LONG).show();
                     }
                 });

@@ -1,7 +1,4 @@
 package com.waam.book2play;
-
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
