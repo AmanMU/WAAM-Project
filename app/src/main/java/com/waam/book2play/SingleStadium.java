@@ -26,11 +26,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class SingleStadium extends AppCompatActivity {
+
+    private RatingCalc ratingCalc;
+
+
     private ImageView sImage;
     private Toolbar toolbar;
 
@@ -42,6 +45,21 @@ public class SingleStadium extends AppCompatActivity {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     FirebaseUser user;
+
+    //validation
+    private Boolean validateFeedback(){
+        String feedbackvalue = feed_back.getEditText().getText().toString();
+
+        if(feedbackvalue.isEmpty()){
+            feed_back.setError("Field cannot be empty");
+            return false;
+        }
+        else{
+            feed_back.setError(null);
+            return true;
+        }
+    }
+
 
 
 
@@ -58,7 +76,7 @@ public class SingleStadium extends AppCompatActivity {
         user= FirebaseAuth.getInstance().getCurrentUser();
         ratingcount=findViewById(R.id.count);
 
-        //created a custom hook to display thank you message
+        //created a custom toast to display thank you message
         LayoutInflater inflater=getLayoutInflater();
         View layout =inflater.inflate(R.layout.custom_toast,(ViewGroup) findViewById(R.id.toast_layout));
 
@@ -93,6 +111,8 @@ public class SingleStadium extends AppCompatActivity {
         //use to state the path of the reference in the database,which one should called
         rootNode = FirebaseDatabase.getInstance();
         reference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("feedbacks");
+        ratingCalc =new RatingCalc();
+
         final String[] id = {reference.push().getKey()};
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -103,7 +123,7 @@ public class SingleStadium extends AppCompatActivity {
                 int total[] = {0};
                 snapshot.getChildren().forEach(e->{
                     FeedbackHelperClass obj =  e.getValue(FeedbackHelperClass.class);
-                    totalRating[0] += obj.getRating();
+                    totalRating[0] = ratingCalc.sumrating(totalRating[0],obj.getRating());
                     total[0]++;
                     if(obj.getEmail().equals(user.getEmail())) {
                         feed_back.getEditText().setText(obj.getFeedback());
@@ -113,25 +133,31 @@ public class SingleStadium extends AppCompatActivity {
                     }
                 });
                 totalRating[0] = totalRating[0]/ total[0];
-                System.out.println(totalRating[0]);
                 totalBar.setRating(totalRating[0]);
 
-                //totalratingbar.setRating(totalRating[0]);
               String num=String.valueOf(total[0]);
                  ratingcount.setText(num);
-
-
-                //textinputrate.setText(total[0]);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
+
+
+
+
+
         //save data in the fireBase on button click
         btn_Rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                //checking validation on button click
+                if(!validateFeedback()){
+                    return;
+                }
 
                 toast.show();
 
@@ -155,5 +181,10 @@ public class SingleStadium extends AppCompatActivity {
         });
 
     }
+
+    public static int add(int n1,int n2){
+        return n1+n2;
+    }
+
 
 }
