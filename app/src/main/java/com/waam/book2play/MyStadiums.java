@@ -33,6 +33,7 @@ public class MyStadiums extends Fragment {
     private DatabaseReference cardRef;
     private FirebaseUser user;
 
+
     public View onCreateView(@NonNull @org.jetbrains.annotations.NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Stadiums");
         View rootView = inflater.inflate(R.layout.activity_my_stadiums, container, false);
@@ -47,6 +48,7 @@ public class MyStadiums extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserEmail = user.getEmail();
         final long[] totalIncome = {0};
+        TotalIncomeCal cal = new TotalIncomeCal();
         cardRef.orderByChild("sEmail").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -57,7 +59,7 @@ public class MyStadiums extends Fragment {
                     stadium.setsKey(postSnapshot.getKey());
                     stadiums.add(stadium);
                     numberOfBookings = postSnapshot.child("bookings").getChildrenCount();
-                    totalIncome[0] += numberOfBookings * Long.parseLong(stadium.getsPrice());
+                    totalIncome[0] = cal.calculateNewTotal(totalIncome[0],numberOfBookings, Long.parseLong(stadium.getsPrice()));
                 }
                 mStadiumIncome.setText(String.valueOf(totalIncome[0]));
                 miniStadiumAdapter = new MiniStadiumAdapter(getContext(), stadiums);
