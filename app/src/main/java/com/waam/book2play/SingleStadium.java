@@ -158,7 +158,7 @@ public class SingleStadium extends AppCompatActivity {
                         c.set(Calendar.HOUR_OF_DAY,hourOfDay);
                         c.set(Calendar.MINUTE,minute);
                         c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format= new SimpleDateFormat("k:mm a");
+                        SimpleDateFormat format= new SimpleDateFormat("k:00 a");
                         String time = format.format(c.getTime());
                         String myDate;
                         if(dateselected != null){
@@ -168,7 +168,7 @@ public class SingleStadium extends AppCompatActivity {
                             return ;
                         }
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy HH:mm");
+                        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy HH:00");
                         Date date = null;
                         try {
                             date = sdf.parse(myDate);
@@ -206,12 +206,14 @@ public class SingleStadium extends AppCompatActivity {
                 else {
                         LocalTime openingTime = LocalTime.parse(stadium.getsOT(), DateTimeFormatter.ofPattern(
                                 "hh:mm a" ,Locale.US));
+
                         LocalTime closingTime = LocalTime.parse(stadium.getsCT(),DateTimeFormatter.ofPattern(
                                 "hh:mm a" ,Locale.US));
                         LocalTime userDate = LocalTime.parse(timeselected,DateTimeFormatter.ofPattern(
-                                "k:mm a" ,Locale.US));
+                                "k:00 a" ,Locale.US));
 
-                        if (userDate.isAfter(openingTime) && userDate.isBefore(closingTime)) {
+                        if ((userDate.equals(openingTime) || userDate.isAfter(openingTime)) &&
+                                (userDate.equals(closingTime) || userDate.isBefore(closingTime))) {
                             bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
                             String key = dateselected + timeselected;
 

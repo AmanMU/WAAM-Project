@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class MyBookings extends Fragment {
     List<Booking> bookings;
     private DatabaseReference cardRefer;
     private FirebaseUser user;
+    TextView totalBookingTv;
 
 
     @Nullable
@@ -38,6 +40,7 @@ public class MyBookings extends Fragment {
     public View onCreateView(@NonNull @org.jetbrains.annotations.NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Bookings");
         View rootView = inflater.inflate(R.layout.activity_my_bookings, container, false);
+        totalBookingTv = rootView.findViewById(R.id.totalAmount);
         bookingRecyclerView = rootView.findViewById(R.id.bookingRecyclerView);
         bookingRecyclerView.setHasFixedSize(true);
         bookingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -46,27 +49,41 @@ public class MyBookings extends Fragment {
         cardRefer = FirebaseDatabase.getInstance().getReference("stadiums");
         user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserEmail = user.getEmail();
+        final double[] totalPrice = {0};
+
         cardRefer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    String stadiumPrice = postSnapshot.getValue(StadiumRegister.class).getsPrice();
+                    double currentStadiumPrice = Double.parseDouble(stadiumPrice);
+                    TotalBookingCal total = new TotalBookingCal();
                     postSnapshot.child("bookings").getRef().orderByChild("email").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot testSnapshot) {
+                            Long bookingCount = testSnapshot.getChildrenCount();
                             for (DataSnapshot bookingSnapshot : testSnapshot.getChildren()) {
                                 Booking myBooking = (Booking) bookingSnapshot.getValue(Booking.class);
-                                Booking test = new Booking(myBooking.getDate().toString(), myBooking.getTime().toString(), myBooking.getEmail().toString(), myBooking.getStadiumName().toString());
-                                bookings.add(test);
+                                bookings.add(myBooking);
                             }
+                            totalPrice[0] = total.calculateBookingTotal(totalPrice[0], currentStadiumPrice, bookingCount);
+//                            totalPrice[0] = totalPrice[0] + (currentStadiumPrice * bookingCount);
+                            Log.d("total",String.valueOf(totalPrice[0]));
+                            Log.d("currentStadiumPrice",String.valueOf(currentStadiumPrice));
+                            Log.d("bookingCount",String.valueOf(bookingCount));
                             singleBookings = new BookingsAdapter(getContext(), bookings);
                             bookingRecyclerView.setAdapter(singleBookings);
+
+                            totalBookingTv.setText(String.valueOf(totalPrice[0]));
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
                 }
+
+
             }
 
             @Override
