@@ -98,10 +98,6 @@ public class SingleStadium extends AppCompatActivity {
         selectedDate = findViewById(R.id.tx_date);
         selectedTime = findViewById(R.id.tx_time);
 
-
-
-
-
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.clear();
 
@@ -198,36 +194,7 @@ public class SingleStadium extends AppCompatActivity {
             }
         });
 
-        //Method to send the data to the database
-//        book_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                reference = FirebaseDatabase.getInstance().getReference().child("Booking");
-//
-//                try{
-//                    //error message when user did not select the date
-//                    if(dateselected == null || dateselected.isEmpty() || dateselected.trim().isEmpty()){
-//                        Toast.makeText(getApplicationContext(),"Please select a date",Toast.LENGTH_LONG).show();
-//                        //error message when user did not select the time
-//                    }else if(timeselected == null || timeselected.isEmpty() || timeselected.trim().isEmpty()){
-//                        Toast.makeText(getApplicationContext(),"Please select a Time",Toast.LENGTH_LONG).show();
-//                    }else{
-//                        //set the text field when user select the time and date
-//                        //book.setDate(dateselected.trim());
-//                        // book.setTime(timeselected.trim());
-//                        //pushing the data to the text field
-//                        reference.child(getuserId()).push().setValue(book);
-//                        Toast.makeText(getApplicationContext(),"Session Booked",Toast.LENGTH_LONG).show();
-//                        //set text fields to default method
-//                        clearControls();
-//
-//                    }
-//                    //catch method
-//                }catch(NumberFormatException e){
-//                    Toast.makeText(getApplicationContext(),"An Error occured",Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+
         
         book_btn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -237,21 +204,12 @@ public class SingleStadium extends AppCompatActivity {
                     Toast.makeText(SingleStadium.this, "Please select date and time", Toast.LENGTH_LONG).show();
                 }
                 else {
-
-//                        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
                         LocalTime openingTime = LocalTime.parse(stadium.getsOT(), DateTimeFormatter.ofPattern(
                                 "hh:mm a" ,Locale.US));
                         LocalTime closingTime = LocalTime.parse(stadium.getsCT(),DateTimeFormatter.ofPattern(
                                 "hh:mm a" ,Locale.US));
-
-
-
-                        Log.d("open",openingTime.toString());
-                        Log.d("close",closingTime.toString());
-
                         LocalTime userDate = LocalTime.parse(timeselected,DateTimeFormatter.ofPattern(
                                 "k:mm a" ,Locale.US));
-                        Log.d("userDate",userDate.toString());
 
                         if (userDate.isAfter(openingTime) && userDate.isBefore(closingTime)) {
                             bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
@@ -263,7 +221,7 @@ public class SingleStadium extends AppCompatActivity {
                                     if (snapshot.exists()) {
                                         Toast.makeText(SingleStadium.this, "Booking already exists in the selected date and time", Toast.LENGTH_LONG).show();
                                     } else {
-                                        book = new Booking(timeselected, dateselected, user.getEmail());
+                                        book = new Booking(timeselected, dateselected, user.getEmail(), stadium.getsName());
                                         bookingReference.child(key).setValue(book);
                                         Toast.makeText(SingleStadium.this, "Booking added successfully",Toast.LENGTH_LONG).show();
                                     }
@@ -277,9 +235,6 @@ public class SingleStadium extends AppCompatActivity {
                         }else{
                             Toast.makeText(SingleStadium.this, "Enter time between " +stadium.getsOT()+ " and " + stadium.getsCT(), Toast.LENGTH_LONG).show();
                         }
-
-
-
                 }
             }
         });
