@@ -47,13 +47,14 @@ public class MyStadiums extends Fragment {
         cardRef = FirebaseDatabase.getInstance().getReference("stadiums");
         user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserEmail = user.getEmail();
-        final double[] totalIncome = {0};
+
         TotalIncomeCal cal = new TotalIncomeCal();
         cardRef.orderByChild("sEmail").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long numberOfBookings = 0;
                 stadiums.clear();
+                final double[] totalIncome = {0};
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
                     stadium.setsKey(postSnapshot.getKey());
