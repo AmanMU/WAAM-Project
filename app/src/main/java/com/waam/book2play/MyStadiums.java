@@ -61,7 +61,7 @@ public class MyStadiums extends Fragment {
                     numberOfBookings = postSnapshot.child("bookings").getChildrenCount();
                     totalIncome[0] = cal.calculateNewTotal(totalIncome[0],numberOfBookings, Long.parseLong(stadium.getsPrice()));
                 }
-                mStadiumIncome.setText(String.valueOf(totalIncome[0]));
+                mStadiumIncome.setText("Rs." + String.valueOf(totalIncome[0]));
                 miniStadiumAdapter = new MiniStadiumAdapter(getContext(), stadiums);
                 mRecyclerView.setAdapter(miniStadiumAdapter);
             }

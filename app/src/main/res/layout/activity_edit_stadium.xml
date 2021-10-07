@@ -184,6 +184,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="numberDecimal"
                 android:maxLines="1"
+                android:enabled="false"
                 tools:ignore="TouchTargetSizeCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>

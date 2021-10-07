@@ -46,6 +46,8 @@ public class MiniStadiumAdapter extends RecyclerView.Adapter<MiniStadiumAdapter.
     public void onBindViewHolder(@NonNull MiniStadiumViewHolder holder, int position) {
         StadiumRegister currentStadium = mStadiums.get(position);
         holder.stadiumName.setText(currentStadium.getsName());
+        holder.noOfSessions.setText(currentStadium.getsNoSessions() + " (1 Hour each)");
+        holder.stadiumPrice.setText(currentStadium.getsPrice() + " Per Hour");
     }
 
     @Override
@@ -54,13 +56,15 @@ public class MiniStadiumAdapter extends RecyclerView.Adapter<MiniStadiumAdapter.
     }
 
     public class MiniStadiumViewHolder extends RecyclerView.ViewHolder {
-        public TextView stadiumName;
+        public TextView stadiumName,noOfSessions,stadiumPrice;
         public Button editBtn, deleteBtn;
 
         public MiniStadiumViewHolder(@NonNull View itemView) {
             super(itemView);
 
             stadiumName = itemView.findViewById(R.id.myStadiumName);
+            noOfSessions = itemView.findViewById(R.id.noOfSessions);
+            stadiumPrice = itemView.findViewById(R.id.stadiumPrice);
             editBtn = itemView.findViewById(R.id.stadiumEditBtn);
             deleteBtn = itemView.findViewById(R.id.stadiumDeleteBtn);
             mStorage = FirebaseStorage.getInstance();
@@ -83,9 +87,9 @@ public class MiniStadiumAdapter extends RecyclerView.Adapter<MiniStadiumAdapter.
                 @Override
                 public void onClick(View view) {
                     Context context = view.getContext();
-                    int posi = getAdapterPosition();
+                    int position = getAdapterPosition();
 
-                    StadiumRegister stadiumD = mStadiums.get(posi);
+                    StadiumRegister stadiumD = mStadiums.get(position);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("Are you sure?");
