@@ -40,6 +40,7 @@ public class MyBookings extends Fragment {
     public View onCreateView(@NonNull @org.jetbrains.annotations.NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Bookings");
         View rootView = inflater.inflate(R.layout.activity_my_bookings, container, false);
+
         totalBookingTv = rootView.findViewById(R.id.totalAmount);
         bookingRecyclerView = rootView.findViewById(R.id.bookingRecyclerView);
         bookingRecyclerView.setHasFixedSize(true);
@@ -67,11 +68,9 @@ public class MyBookings extends Fragment {
                                 Booking myBooking = (Booking) bookingSnapshot.getValue(Booking.class);
                                 bookings.add(myBooking);
                             }
+
                             totalPrice[0] = total.calculateBookingTotal(totalPrice[0], currentStadiumPrice, bookingCount);
-//                            totalPrice[0] = totalPrice[0] + (currentStadiumPrice * bookingCount);
-                            Log.d("total",String.valueOf(totalPrice[0]));
-                            Log.d("currentStadiumPrice",String.valueOf(currentStadiumPrice));
-                            Log.d("bookingCount",String.valueOf(bookingCount));
+
                             singleBookings = new BookingsAdapter(getContext(), bookings);
                             bookingRecyclerView.setAdapter(singleBookings);
 

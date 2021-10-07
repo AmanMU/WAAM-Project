@@ -200,6 +200,7 @@ public class SingleStadium extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+
                 if (timeselected == null || dateselected == null) {
                     Toast.makeText(SingleStadium.this, "Please select date and time", Toast.LENGTH_LONG).show();
                 }
@@ -211,7 +212,7 @@ public class SingleStadium extends AppCompatActivity {
                                 "hh:mm a" ,Locale.US));
                         LocalTime userDate = LocalTime.parse(timeselected,DateTimeFormatter.ofPattern(
                                 "k:00 a" ,Locale.US));
-
+                        //check user selected time is between opening and closing time
                         if ((userDate.equals(openingTime) || userDate.isAfter(openingTime)) &&
                                 (userDate.equals(closingTime) || userDate.isBefore(closingTime))) {
                             bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
@@ -220,6 +221,7 @@ public class SingleStadium extends AppCompatActivity {
                             bookingReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    //check booking is already exists in selected date and time
                                     if (snapshot.exists()) {
                                         Toast.makeText(SingleStadium.this, "Booking already exists in the selected date and time", Toast.LENGTH_LONG).show();
                                     } else {
