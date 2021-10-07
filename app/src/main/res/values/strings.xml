@@ -55,4 +55,6 @@
     <string name="stadiumTypeTextField">Stadium Type</string>
     <string name="edit_tv_headline">Update Your Stadium Details</string>
     <string name="btn_stadiumUpdate">Update</string>
+    <string name="expected_income">Expected Total Income : </string>
+    <string name="_0">0</string>
 </resources>

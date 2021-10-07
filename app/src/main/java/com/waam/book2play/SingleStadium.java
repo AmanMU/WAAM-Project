@@ -34,6 +34,7 @@ public class SingleStadium extends AppCompatActivity {
     private ImageView sImage;
     private Toolbar toolbar;
 
+
     //variables
     TextInputLayout feed_back;
     TextView ratingcount;
@@ -155,5 +156,4 @@ public class SingleStadium extends AppCompatActivity {
         });
 
     }
-
 }
