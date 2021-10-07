@@ -75,6 +75,21 @@ public class SingleStadium extends AppCompatActivity {
     private String timeselected;
     private String dateselected;
 
+    //validation
+    private Boolean validateFeedback(){
+        String feedbackvalue = feed_back.getEditText().getText().toString();
+
+        if(feedbackvalue.isEmpty()){
+            feed_back.setError("Field cannot be empty");
+            return false;
+        }
+        else{
+            feed_back.setError(null);
+            return true;
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +210,7 @@ public class SingleStadium extends AppCompatActivity {
         });
 
 
-        
+
         book_btn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -205,40 +220,40 @@ public class SingleStadium extends AppCompatActivity {
                     Toast.makeText(SingleStadium.this, "Please select date and time", Toast.LENGTH_LONG).show();
                 }
                 else {
-                        LocalTime openingTime = LocalTime.parse(stadium.getsOT(), DateTimeFormatter.ofPattern(
-                                "hh:mm a" ,Locale.US));
+                    LocalTime openingTime = LocalTime.parse(stadium.getsOT(), DateTimeFormatter.ofPattern(
+                            "hh:mm a" ,Locale.US));
 
-                        LocalTime closingTime = LocalTime.parse(stadium.getsCT(),DateTimeFormatter.ofPattern(
-                                "hh:mm a" ,Locale.US));
-                        LocalTime userDate = LocalTime.parse(timeselected,DateTimeFormatter.ofPattern(
-                                "k:00 a" ,Locale.US));
-                        //check user selected time is between opening and closing time
-                        if ((userDate.equals(openingTime) || userDate.isAfter(openingTime)) &&
-                                (userDate.equals(closingTime) || userDate.isBefore(closingTime))) {
-                            bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
-                            String key = dateselected + timeselected;
+                    LocalTime closingTime = LocalTime.parse(stadium.getsCT(),DateTimeFormatter.ofPattern(
+                            "hh:mm a" ,Locale.US));
+                    LocalTime userDate = LocalTime.parse(timeselected,DateTimeFormatter.ofPattern(
+                            "k:00 a" ,Locale.US));
+                    //check user selected time is between opening and closing time
+                    if ((userDate.equals(openingTime) || userDate.isAfter(openingTime)) &&
+                            (userDate.equals(closingTime) || userDate.isBefore(closingTime))) {
+                        bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
+                        String key = dateselected + timeselected;
 
-                            bookingReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    //check booking is already exists in selected date and time
-                                    if (snapshot.exists()) {
-                                        Toast.makeText(SingleStadium.this, "Booking already exists in the selected date and time", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        book = new Booking(timeselected, dateselected, user.getEmail(), stadium.getsName());
-                                        bookingReference.child(key).setValue(book);
-                                        Toast.makeText(SingleStadium.this, "Booking added successfully",Toast.LENGTH_LONG).show();
-                                    }
+                        bookingReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //check booking is already exists in selected date and time
+                                if (snapshot.exists()) {
+                                    Toast.makeText(SingleStadium.this, "Booking already exists in the selected date and time", Toast.LENGTH_LONG).show();
+                                } else {
+                                    book = new Booking(timeselected, dateselected, user.getEmail(), stadium.getsName());
+                                    bookingReference.child(key).setValue(book);
+                                    Toast.makeText(SingleStadium.this, "Booking added successfully",Toast.LENGTH_LONG).show();
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Log.d("Booking error", error.getMessage());
-                                }
-                            });
-                        }else{
-                            Toast.makeText(SingleStadium.this, "Enter time between " +stadium.getsOT()+ " and " + stadium.getsCT(), Toast.LENGTH_LONG).show();
-                        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.d("Booking error", error.getMessage());
+                            }
+                        });
+                    }else{
+                        Toast.makeText(SingleStadium.this, "Enter time between " +stadium.getsOT()+ " and " + stadium.getsCT(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -279,6 +294,7 @@ public class SingleStadium extends AppCompatActivity {
         rootNode = FirebaseDatabase.getInstance();
         reference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("feedbacks");
         final String[] id = {reference.push().getKey()};
+        RatingCalc ratingCalc=new RatingCalc();
 
         reference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -288,7 +304,7 @@ public class SingleStadium extends AppCompatActivity {
                 int total[] = {0};
                 snapshot.getChildren().forEach(e->{
                     FeedbackHelperClass obj =  e.getValue(FeedbackHelperClass.class);
-                    totalRating[0] += obj.getRating();
+                    totalRating[0] = ratingCalc.sumrating(totalRating[0],obj.getRating());
                     total[0]++;
                     if(obj.getEmail().equals(user.getEmail())) {
                         feed_back.getEditText().setText(obj.getFeedback());
@@ -298,17 +314,11 @@ public class SingleStadium extends AppCompatActivity {
                     }
                 });
                 totalRating[0] = totalRating[0]/ total[0];
-                System.out.println(totalRating[0]);
                 totalBar.setRating(totalRating[0]);
 
-                //totalratingbar.setRating(totalRating[0]);
-              String num=String.valueOf(total[0]);
-                 ratingcount.setText(num);
-
-
-                //textinputrate.setText(total[0]);
+                String num=String.valueOf(total[0]);
+                ratingcount.setText(num);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
@@ -317,6 +327,11 @@ public class SingleStadium extends AppCompatActivity {
         btn_Rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //checking validation on button click
+                if(!validateFeedback()){
+                    return;
+                }
 
                 toast.show();
 
