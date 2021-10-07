@@ -228,8 +228,7 @@ public class SingleStadium extends AppCompatActivity {
                     LocalTime userDate = LocalTime.parse(timeselected,DateTimeFormatter.ofPattern(
                             "k:00 a" ,Locale.US));
                     //check user selected time is between opening and closing time
-                    if ((userDate.equals(openingTime) || userDate.isAfter(openingTime)) &&
-                            (userDate.equals(closingTime) || userDate.isBefore(closingTime))) {
+                    if ((userDate.equals(openingTime) || userDate.isAfter(openingTime)) && (userDate.isBefore(closingTime))) {
                         bookingReference = rootNode.getReference("stadiums").child(stadium.getsKey()).child("bookings");
                         String key = dateselected + timeselected;
 
