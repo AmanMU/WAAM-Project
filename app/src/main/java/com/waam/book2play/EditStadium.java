@@ -200,17 +200,6 @@ public class EditStadium extends AppCompatActivity {
         }
     }
 
-    private boolean validatePrice() {
-        String price = sPrice.getText().toString().trim();
-        if (price.isEmpty()) {
-            sPriceLayout.setError("Field Cannot be empty.");
-            return false;
-        } else {
-            sPriceLayout.setError(null);
-            return true;
-        }
-    }
-
     private boolean validateType() {
         String type = sType.getText().toString().trim();
         if (type.isEmpty()) {
@@ -223,7 +212,7 @@ public class EditStadium extends AppCompatActivity {
     }
 
     public void updateStadium(View view) throws Exception {
-        if (!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime() | !validatePrice() | !validateType()) {
+        if (!validatePhone() | !validateStadiumName() | !validateLocation() | !validateOpenTime() | !validateCloseTime()  | !validateType()) {
             return;
         } else {
             NoOfSessionsCal sessionNumber = new NoOfSessionsCal();
@@ -232,7 +221,6 @@ public class EditStadium extends AppCompatActivity {
             String location = sAddress.getText().toString().trim();
             String ot = sOT.getText().toString().trim();
             String ct = sCT.getText().toString().trim();
-            String price = sPrice.getText().toString().trim();
             String type = sType.getText().toString().trim();
             String noSessions = sessionNumber.calcDif(ot, ct);
 
@@ -243,7 +231,6 @@ public class EditStadium extends AppCompatActivity {
             stadiumUpdates.put("sLocation", location);
             stadiumUpdates.put("sOT", ot);
             stadiumUpdates.put("sCT", ct);
-            stadiumUpdates.put("sPrice", price);
             stadiumUpdates.put("sType", type);
             stadiumUpdates.put("sNoSessions", noSessions);
 
