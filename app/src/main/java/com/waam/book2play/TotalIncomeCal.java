@@ -4,7 +4,7 @@ public class TotalIncomeCal {
 
     public TotalIncomeCal(){}
 
-    public long calculateNewTotal(long currentTotal, long numberOfBookings, long stadiumPrice) {
+    public double calculateNewTotal(double currentTotal, long numberOfBookings, double stadiumPrice) {
         return currentTotal + (numberOfBookings * stadiumPrice);
     }
 }

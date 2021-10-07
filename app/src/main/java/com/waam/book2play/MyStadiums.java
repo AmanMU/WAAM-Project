@@ -47,7 +47,7 @@ public class MyStadiums extends Fragment {
         cardRef = FirebaseDatabase.getInstance().getReference("stadiums");
         user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserEmail = user.getEmail();
-        final long[] totalIncome = {0};
+        final double[] totalIncome = {0};
         TotalIncomeCal cal = new TotalIncomeCal();
         cardRef.orderByChild("sEmail").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
             @Override
@@ -59,7 +59,7 @@ public class MyStadiums extends Fragment {
                     stadium.setsKey(postSnapshot.getKey());
                     stadiums.add(stadium);
                     numberOfBookings = postSnapshot.child("bookings").getChildrenCount();
-                    totalIncome[0] = cal.calculateNewTotal(totalIncome[0],numberOfBookings, Long.parseLong(stadium.getsPrice()));
+                    totalIncome[0] = cal.calculateNewTotal(totalIncome[0],numberOfBookings, Double.parseDouble(stadium.getsPrice()));
                 }
                 mStadiumIncome.setText("Rs." + String.valueOf(totalIncome[0]));
                 miniStadiumAdapter = new MiniStadiumAdapter(getContext(), stadiums);
