@@ -80,10 +80,10 @@ public class Home extends Fragment {
                 cardRef.orderByChild("sType").equalTo(CRICKET).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        stadiums.clear();
                         for(DataSnapshot postSnapshot : snapshot.getChildren()) {
                             StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
                             stadium.setsKey(postSnapshot.getKey());
-                            stadiums.clear();
                             stadiums.add(stadium);
                         }
 
@@ -106,10 +106,10 @@ public class Home extends Fragment {
                 cardRef.orderByChild("sType").equalTo(FUTSAL).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        stadiums.clear();
                         for(DataSnapshot postSnapshot : snapshot.getChildren()) {
                             StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
                             stadium.setsKey(postSnapshot.getKey());
-                            stadiums.clear();
                             stadiums.add(stadium);
                         }
 
@@ -132,10 +132,10 @@ public class Home extends Fragment {
                 cardRef.orderByChild("sType").equalTo(BADMINTON).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        stadiums.clear();
                         for(DataSnapshot postSnapshot : snapshot.getChildren()) {
                             StadiumRegister stadium = postSnapshot.getValue(StadiumRegister.class);
                             stadium.setsKey(postSnapshot.getKey());
-                            stadiums.clear();
                             stadiums.add(stadium);
                         }
 
