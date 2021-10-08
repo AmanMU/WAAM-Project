@@ -14,7 +14,7 @@ public class TotalIncomeCalTest {
 
     @Test
     public void calculateNewTotalTest() {
-        long result = totalIncomeCal.calculateNewTotal(4000,5,4000);
-        Assert.assertEquals(24000, result);
+        double result = totalIncomeCal.calculateNewTotal(4000,5,4000);
+        Assert.assertEquals(24000, result, 0);
     }
 }
